@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RepairShop Pro — การนำเสนอหลักการ OOP</title>
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+        --primary: #2563eb;
+        --primary-dark: #1d4ed8;
+        --bg: #0f172a;
+        --bg-2: #1e293b;
+        --text: #e2e8f0;
+        --muted: #94a3b8;
+        --accent: #38bdf8;
+        --code-bg: #0b1120;
+        --success: #4ade80;
+        --warning: #fbbf24;
+        --danger: #f87171;
+        --purple: #a78bfa;
+        --pink: #f472b6;
+    }
+
+    body {
+        font-family: 'Segoe UI', 'Leelawadee UI', Tahoma, 'Noto Sans Thai', system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        overflow: hidden;
+        height: 100vh;
+    }
+
+    pre, code, .ln {
+        font-family: 'Cascadia Code', 'Fira Code', Consolas, 'Leelawadee UI', monospace;
+    }
+
+    /* ── SLIDE DECK ── */
+    .deck { position: relative; width: 100vw; height: 100vh; }
+
+    .slide {
+        position: absolute;
+        inset: 0;
+        display: none;
+        padding: 56px 72px;
+        flex-direction: column;
+        background: linear-gradient(135deg, var(--bg) 0%, #16233f 100%);
+        animation: fade .35s ease;
+    }
+    .slide.active { display: flex; }
+
+    @keyframes fade { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ── SLIDE CONTENT ── */
+    .slide-content { flex: 1; display: flex; flex-direction: column; justify-content: center; max-width: 1080px; width: 100%; margin: 0 auto; }
+
+    .kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--accent);
+        font-size: .8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: .12em;
+        margin-bottom: 14px;
+    }
+    .kicker::before { content: ""; width: 26px; height: 2px; background: var(--accent); }
+
+    h1 { font-size: 2.6rem; line-height: 1.2; margin-bottom: 12px; font-weight: 800; }
+    h2 { font-size: 1.9rem; line-height: 1.35; margin-bottom: 20px; font-weight: 800; }
+    .subtitle { font-size: 1.1rem; color: var(--muted); max-width: 720px; line-height: 1.8; }
+    .highlight { color: var(--accent); }
+
+    .slide-number {
+        position: absolute;
+        bottom: 22px; right: 32px;
+        font-size: .8rem;
+        color: var(--muted);
+        font-variant-numeric: tabular-nums;
+    }
+
+    .nav-hint {
+        position: absolute;
+        bottom: 22px; left: 32px;
+        font-size: .72rem;
+        color: var(--muted);
+        opacity: .7;
+        letter-spacing: .03em;
+    }
+
+    /* ── GRID / LAYOUT ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+    /* ── FEATURE CARDS ── */
+    .card {
+        background: rgba(255,255,255,.05);
+        border: 1px solid rgba(255,255,255,.09);
+        border-radius: 14px;
+        padding: 22px;
+        transition: transform .2s ease, border-color .2s ease;
+    }
+    .card:hover { transform: translateY(-3px); border-color: rgba(56,189,248,.4); }
+    .card .emoji { font-size: 1.9rem; margin-bottom: 10px; }
+    .card h3 { font-size: 1.02rem; margin-bottom: 6px; font-weight: 700; }
+    .card p { font-size: .85rem; color: var(--muted); line-height: 1.75; }
+
+    /* ── CODE BLOCKS ── */
+    pre {
+        background: var(--code-bg);
+        border: 1px solid rgba(255,255,255,.08);
+        border-radius: 12px;
+        padding: 20px 22px;
+        font-size: .82rem;
+        line-height: 1.7;
+        overflow-x: auto;
+        position: relative;
+    }
+    pre .line-num { color: #475569; user-select: none; margin-right: 14px; display: inline-block; width: 30px; text-align: right; }
+    pre .kw { color: #c792ea; }
+    pre .cls { color: #82aaff; }
+    pre .str { color: #c3e88d; }
+    pre .cmt { color: #546e7a; font-style: italic; }
+    pre .num { color: #f78c6c; }
+    pre .prp { color: #89ddff; }
+    .code-label {
+        position: absolute;
+        top: 10px; right: 14px;
+        font-size: .65rem;
+        color: var(--muted);
+        background: rgba(255,255,255,.06);
+        padding: 2px 10px;
+        border-radius: 20px;
+        letter-spacing: .06em;
+    }
+
+    /* ── PRINCIPLE BADGE ── */
+    .principle-badge {
+        display: inline-block;
+        padding: 4px 16px;
+        border-radius: 30px;
+        font-size: .75rem;
+        font-weight: 700;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+    }
+    .badge-abstraction { background: rgba(167,139,250,.15); color: var(--purple); border: 1px solid rgba(167,139,250,.4); }
+    .badge-encapsulation { background: rgba(56,189,248,.15); color: var(--accent); border: 1px solid rgba(56,189,248,.4); }
+    .badge-inheritance { background: rgba(74,222,128,.15); color: var(--success); border: 1px solid rgba(74,222,128,.4); }
+    .badge-polymorphism { background: rgba(244,114,182,.15); color: var(--pink); border: 1px solid rgba(244,114,182,.4); }
+
+    .pill-list { list-style: none; }
+    .pill-list li {
+        padding: 8px 0;
+        border-bottom: 1px solid rgba(255,255,255,.07);
+        font-size: .92rem;
+        color: var(--text);
+        display: flex;
+        gap: 10px;
+        align-items: baseline;
+    }
+    .pill-list li:last-child { border-bottom: none; }
+    .pill-list .tag { color: var(--accent); font-weight: 700; font-size: .78rem; min-width: 150px; text-transform: uppercase; letter-spacing: .04em; }
+    .pill-list .ln { color: var(--muted); font-size: .72rem; white-space: nowrap; }
+
+    /* ── CLASS HIERARCHY DIAGRAM ── */
+    .hierarchy { display: flex; flex-direction: column; align-items: center; gap: 0; }
+    .h-node {
+        background: rgba(255,255,255,.06);
+        border: 1px solid rgba(255,255,255,.14);
+        border-radius: 10px;
+        padding: 12px 24px;
+        text-align: center;
+        min-width: 280px;
+    }
+    .h-node .name { font-weight: 800; font-size: 1rem; }
+    .h-node .sub { font-size: .72rem; color: var(--muted); font-family: Consolas, monospace; }
+    .h-node.abstract { border-style: dashed; border-color: var(--purple); }
+    .h-node.abstract .name { color: var(--purple); font-style: italic; }
+    .h-connector { width: 2px; height: 26px; background: rgba(255,255,255,.25); }
+    .h-branch { display: flex; gap: 24px; }
+    .h-label { font-size: .68rem; color: var(--muted); margin-top: 4px; letter-spacing: .03em; }
+
+    /* ── FLOW ── */
+    .flow { display: flex; align-items: center; gap: 12px; font-size: .8rem; flex-wrap: wrap; }
+    .flow .step {
+        background: rgba(255,255,255,.06);
+        border: 1px solid rgba(255,255,255,.12);
+        padding: 8px 14px;
+        border-radius: 8px;
+        font-family: Consolas, monospace;
+    }
+    .flow .arrow { color: var(--accent); font-size: 1.1rem; }
+
+    /* ── TITLE SLIDE ── */
+    .title-slide { justify-content: center; text-align: left; }
+    .title-slide h1 { font-size: 3.2rem; margin-bottom: 6px; }
+    .title-slide .subtitle { margin-bottom: 40px; }
+    .title-meta { display: flex; gap: 28px; flex-wrap: wrap; font-size: .85rem; color: var(--muted); }
+    .title-meta span { display: flex; align-items: center; gap: 8px; }
+
+    .divider { width: 60px; height: 4px; background: linear-gradient(90deg, var(--accent), var(--purple)); border-radius: 2px; margin: 18px 0; }
+
+    /* ── COMPARISON TABLE ── */
+    .compare { width: 100%; border-collapse: collapse; font-size: .88rem; }
+    .compare th, .compare td { padding: 10px 14px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.08); }
+    .compare th { color: var(--accent); font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; }
+    .compare td code { color: var(--warning); font-size: .8rem; }
+
+    /* ── PROGRESS BAR ── */
+    .progress { position: absolute; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--purple)); transition: width .3s ease; z-index: 10; }
+
+    /* ── NAV ARROWS ── */
+    .nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 44px; height: 44px;
+        border-radius: 50%;
+        border: 1px solid rgba(255,255,255,.15);
+        background: rgba(255,255,255,.06);
+        color: var(--text);
+        font-size: 1.2rem;
+        cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        transition: all .2s ease;
+        z-index: 20;
+    }
+    .nav-btn:hover { background: rgba(56,189,248,.2); border-color: var(--accent); }
+    .nav-prev { left: 18px; }
+    .nav-next { right: 18px; }
+
+    /* ── DOT NAV ── */
+    .dots {
+        position: absolute;
+        bottom: 20px; left: 50%;
+        transform: translateX(-50%);
+        display: flex; gap: 7px;
+        z-index: 20;
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.2); cursor: pointer; transition: all .2s ease; }
+    .dot.active { background: var(--accent); transform: scale(1.25); }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1.1fr; gap: 30px; align-items: center; }
+    .check-list { list-style: none; }
+    .check-list li { padding: 9px 0; font-size: .95rem; display: flex; gap: 12px; align-items: center; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .check-list li::before { content: "✓"; color: var(--success); font-weight: 800; }
+    .check-list li:last-child { border-bottom: none; }
+
+    @media (max-width: 900px) {
+        .slide { padding: 40px 28px; overflow-y: auto; }
+        h1 { font-size: 2rem; }
+        .grid-2, .two-col { grid-template-columns: 1fr; }
+        .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+        .nav-btn { display: none; }
+    }
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+    <!-- ═══════════ สไลด์ 1: หน้าปก ═══════════ -->
+    <section class="slide title-slide active">
+        <div class="slide-content">
+            <div class="kicker">การเขียนโปรแกรมเชิงวัตถุ (OOP) · โครงงานย่อย</div>
+            <h1>🔧 RepairShop Pro</h1>
+            <h2 style="font-size:1.9rem; color:var(--accent); margin-bottom:10px;">ระบบบริหารจัดการร้านซ่อมคอมพิวเตอร์<br>และสมาร์ทโฟน</h2>
+            <div class="divider"></div>
+            <p class="subtitle">แอปพลิเคชัน GUI ที่ใช้งานได้จริง สร้างด้วย <strong>HTML, CSS และ JavaScript</strong> แสดงหลักการ OOP ครบทั้ง 4 ประการในโปรเจกต์เดียว ได้แก่ <strong>Abstraction</strong> (นามธรรม) · <strong>Encapsulation</strong> (การห่อหุ้ม) · <strong>Inheritance</strong> (การสืบทอด) · <strong>Polymorphism</strong> (พหุสัณฐาน)</p>
+            <div class="title-meta">
+                <span>📄 ไฟล์ HTML เดียว</span>
+                <span>🗄️ บันทึกข้อมูลด้วย localStorage</span>
+                <span>🏷️ 11 คลาส · 2,000+ บรรทัด</span>
+                <span>⚡ ไม่พึ่งพาไลบรารีภายนอก</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ สไลด์ 2: ปัญหาและแนวทางแก้ ═══════════ -->
+    <section class="slide">
+        <div class="slide-content">
+            <div class="kicker">ขั้นตอนที่ 1 · วิเคราะห์ปัญหา</div>
+            <h2>ปัญหาจากโลกความจริง</h2>
+            <div class="grid-2">
+                <div>
+                    <p class="subtitle" style="margin-bottom:20px;">ร้านซ่อมต้องจัดการงานซ่อมหลายประเภทพร้อมกัน — โน้ตบุ๊ก, เดสก์ท็อป, iPhone, มือถือ Android — ซึ่งแต่ละประเภทมีราคา รายละเอียด และขั้นตอนการทำงานต่างกัน การจดในสมุดหรือสเปรดชีตทำให้เกิดปัญหา:</p>
+                    <ul class="check-list" style="margin-top:10px;">
+                        <li>งานซ่อมหายและลืมติดตามผล</li>
+                        <li>คิดราคาไม่เป็นมาตรฐาน (อุปกรณ์แต่ละชนิดคิดต่างกัน)</li>
+                        <li>ไม่มีประวัติลูกค้าหรือช่างเทคนิค</li>
+                        <li>ไม่เห็นภาพรวมรายได้ของร้าน</li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="subtitle" style="margin-bottom:20px;"><strong class="highlight">แนวทางของเรา:</strong> ออกแบบโมเดล OOP โดยให้อุปกรณ์แต่ละชนิดเป็น <em>ประเภท (type)</em> ที่แตกต่างกันของแนวคิดเดียวกัน — นั่นคือคลาส <code style="color:var(--warning)">RepairItem</code> พฤติกรรมร่วมอยู่ที่คลาสแม่ แต่ละชนิดของอุปกรณ์ให้รายละเอียดของตัวเอง</p>
+                    <div style="background:rgba(56,189,248,.08); border:1px solid rgba(56,189,248,.25); border-radius:12px; padding:18px; font-size:.85rem; line-height:1.8;">
+                        <strong style="color:var(--accent);">ทำไม OOP ถึงเหมาะกับปัญหานี้:</strong><br>
+                        งานซ่อมเป็น <em>วัตถุ (object)</em> ตามธรรมชาติ (มีสถานะ + พฤติกรรม) อุปกรณ์ต่างชนิดมีโครงสร้างร่วมกัน (Inheritance) แต่มีราคาต่างกัน (Polymorphism) OOP ทำให้ระบบขยายง่าย — การเพิ่ม <em>การซ่อมแท็บเล็ต</em> ในอนาคต = แค่เพิ่มคลาสย่อยอีก 1 คลาส
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ สไลด์ 3: คุณสมบัติ / การสาธิต ═══════════ -->
+    <section class="slide">
+        <div class="slide-content">
+            <div class="kicker">การสาธิต · ทัวร์ระบบ</div>
+            <h2>คุณสมบัติ — ระบบทำอะไรได้บ้าง</h2>
+            <div class="grid-3">
+                <div class="card"><div class="emoji">📊</div><h3>แดชบอร์ด</h3><p>สถิติสด — จำนวนงานซ่อมทั้งหมด, งานที่กำลังทำ, งานที่เสร็จแล้ว, รายได้รวม พร้อมกราฟแยกตามประเภทอุปกรณ์และสถานะ รวมถึงฟีดกิจกรรมล่าสุด</p></div>
+                <div class="card"><div class="emoji">🔩</div><h3>จัดการงานซ่อม</h3><p>สร้าง แก้ไข ลบ และดูรายละเอียดงานซ่อม ฟอร์มเฉพาะตามประเภท: คอมพิวเตอร์บันทึก OS ส่วนมือถือบันทึก iOS/Android พร้อมลำดับสถานะและระดับความเร่งด่วน</p></div>
+                <div class="card"><div class="emoji">👥</div><h3>ลูกค้า</h3><p>ฐานข้อมูลลูกค้า พร้อมรายละเอียดติดต่อ จำนวนงานซ่อมต่อลูกค้า และยอดใช้จ่ายสะสม</p></div>
+                <div class="card"><div class="emoji">🧑‍🔧</div><h3>ช่างเทคนิค</h3><p>โปรไฟล์ช่างพร้อมความชำนาญ ทักษะ อัตราค่าชั่วโมง และภาระงานสด (งานที่กำลังทำ กับงานที่เสร็จแล้ว)</p></div>
+                <div class="card"><div class="emoji">💰</div><h3>บิลและใบแจ้งหนี้</h3><p>ใบแจ้งหนี้สร้างอัตโนมัติจากงานซ่อมที่เสร็จ — ค่าอะไหล่ + ค่าแรง + ภาษี — พร้อมติดตามยอดชำระแล้ว/ค้างชำระ</p></div>
+                <div class="card"><div class="emoji">🔍</div><h3>ค้นหาและกรอง</h3><p>ค้นหาทั่วระบบจากชื่ออุปกรณ์ ปัญหา หรือชื่อลูกค้า พร้อมตัวกรองสถานะและประเภทอุปกรณ์ในตารางงานซ่อม</p></div>
+            </div>
+            <p style="font-size:.78rem; color:var(--muted); margin-top:18px;">ข้อมูลทั้งหมดบันทึกใน <strong>localStorage</strong> — ปิดเบราว์เซอร์แล้วเปิดใหม่ ข้อมูลร้านยังอยู่ครบ มีข้อมูลตัวอย่าง (demo data) เตรียมไว้ให้ เปิดใช้งานได้ทันที</p>
+        </div>
+    </section>
+
+    <!-- ═══════════ สไลด์ 4: ลำดับชั้นคลาส ═══════════ -->
+    <section class="slide">
+        <div class="slide-content">
+            <div class="kicker">การออกแบบ · สถาปัตยกรรม</div>
+            <h2>ลำดับชั้นคลาส (Class Hierarchy) — โมเดลเดียวครบทุกอย่าง</h2>
+            <div class="two-col">
+                <div class="hierarchy">
+                    <div class="h-node abstract"><div class="name">BaseEntity</div><div class="sub">บรรทัด 905 · นามธรรม · ID อัตโนมัติ</div></div>
+                    <div class="h-connector"></div>
+                    <div class="h-node abstract"><div class="name">RepairItem</div><div class="sub">บรรทัด 929 · นามธรรม · สถานะ, ความเร่งด่วน</div></div>
+                    <div class="h-connector"></div>
+                    <div class="h-branch">
+                        <div style="display:flex; flex-direction:column; align-items:center; gap:10px;">
+                            <div class="h-connector"></div>
+                            <div class="h-node"><div class="name">ComputerRepair</div><div class="sub">บรรทัด 986 · 💻 $40/ชม.</div></div>
+                        </div>
+                        <div style="display:flex; flex-direction:column; align-items:center; gap:10px;">
+                            <div class="h-connector"></div>
+                            <div class="h-node"><div class="name">SmartphoneRepair</div><div class="sub">บรรทัด 1055 · 📱 $30/ชม.</div></div>
+                        </div>
+                    </div>
+                    <div class="h-connector"></div>
+                    <div class="h-node"><div class="name">Invoice</div><div class="sub">บรรทัด 1210</div></div>
+                </div>
+                <div>
+                    <p class="subtitle" style="margin-bottom:18px;">สองลำดับชั้นแบบขนาน ภายใต้การออกแบบเดียวกัน:</p>
+                    <ul class="pill-list">
+                        <li><span class="tag">ผู้คน</span><span><code style="color:var(--success)">Person</code> (บรรทัด 1129) → <code style="color:var(--success)">Customer</code> (1157) และ <code style="color:var(--success)">Technician</code> (1173)</span><span class="ln">การสืบทอด</span></li>
+                        <li><span class="tag">งานซ่อม</span><span><code style="color:var(--success)">RepairItem</code> → <code style="color:var(--success)">ComputerRepair</code> และ <code style="color:var(--success)">SmartphoneRepair</code></span><span class="ln">การสืบทอด</span></li>
+                        <li><span class="tag">การเก็บข้อมูล</span><span><code style="color:var(--success)">DataStore</code> — CRUD + localStorage (บรรทัด 1253)</span><span class="ln">การห่อหุ้ม</span></li>
+                        <li><span class="tag">การสร้างวัตถุ</span><span><code style="color:var(--success)">RepairFactory</code> — สร้างคลาสย่อยที่ถูกต้อง (บรรทัด 1396)</span><span class="ln">พหุสัณฐาน</span></li>
+                    </ul>
+                    <div style="background:rgba(255,255,255,.05); border:1px dashed rgba(255,255,255,.2); border-radius:10px; padding:14px; font-size:.8rem; color:var(--muted); margin-top:14px;">
+                        💡 กล่องเส้นประคือคลาส <em>นามธรรม</em> — กำหนดกติกา ส่วนคลาสลูกที่ใช้งานจริงเป็นผู้ลงมือทำงาน
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ สไลด์ 5: ABSTRACTION ═══════════ -->
+    <section class="slide">
+        <div class="slide-content">
+            <div class="principle-badge badge-abstraction">หลักการ OOP ข้อที่ 1 จาก 4</div>
+            <h2>Abstraction (นามธรรม) — กำหนดข้อตกลงร่วม</h2>
+            <div class="two-col">
+                <div>
+                    <p class="subtitle" style="margin-bottom:16px;"><strong class="highlight">แนวคิด:</strong> ซ่อนความซับซ้อนไว้เบื้องหลังอินเทอร์เฟซง่าย ๆ คลาส <code style="color:var(--warning)">BaseEntity</code> (บรรทัด 905) และ <code style="color:var(--warning)">RepairItem</code> (บรรทัด 929) เป็นคลาส <em>นามธรรม</em> — สร้างโดยตรงไม่ได้ ต้องสร้างผ่านคลาสย่อยเท่านั้น คลาสเหล่านี้ประกาศว่างานซ่อมทุกชิ้น <em>ต้องทำอะไร</em> ไม่ใช่ <em>ทำอย่างไร</em></p>
+                    <ul class="pill-list">
+                        <li><span class="tag">การป้องกัน</span><span><code>new.target</code> บล็อกการสร้างคลาสโดยตรง</span><span class="ln">บรรทัด 909</span></li>
+                        <li><span class="tag">ข้อตกลง</span><span>งานซ่อมทุกชิ้นต้องมี <code>calculateCost()</code>, <code>getDeviceSpecs()</code>, <code>type</code>, <code>displayInfo</code></span><span class="ln">บรรทัด 942–949</span></li>
+                        <li><span class="tag">ผลลัพธ์</span><span>ส่วน UI ไม่ต้องสนใจประเภทอุปกรณ์ — แค่เรียกอินเทอร์เฟซ</span><span class="ln">ใช้ใน renderer</span></li>
+                    </ul>
+                </div>
+                <pre><span class="code-label">repair_shop_management.html</span><span class="cmt">// บรรทัด 905–914 — BaseEntity นามธรรม</span>
+<span class="line-num">905</span><span class="kw">class</span> <span class="cls">BaseEntity</span> {
+<span class="line-num">906</span>    <span class="prp">#id</span>; <span class="cmt">// Private field (ENCAPSULATION)</span>
+<span class="line-num">908</span>    <span class="kw">constructor</span>(id = <span class="num">null</span>) {
+<span class="line-num">909</span>        <span class="kw">if</span> (<span class="prp">new</span>.target === <span class="cls">BaseEntity</span>) {
+<span class="line-num">910</span>            <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"Cannot instantiate abstract class."</span>);
+<span class="line-num">911</span>        }
+<span class="line-num">912</span>        <span class="prp">this</span>.<span class="prp">#id</span> = id || <span class="cls">BaseEntity</span>._nextId++;
+<span class="line-num">913</span>    }
+<span class="line-num">915</span>    <span class="cmt">// ABSTRACT methods — must be overridden</span>
+<span class="line-num">916</span>    <span class="kw">get</span> displayInfo() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"..."</span>); }
+<span class="line-num">945</span>    <span class="cmt">// ใน RepairItem (บรรทัด 929):</span>
+<span class="line-num">945</span>    calculateCost() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"Subclasses must implement..."</span>); }
+<span class="line-num">948</span>    getDeviceSpecs() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"Subclasses must implement..."</span>); }</pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ สไลด์ 6: ENCAPSULATION ═══════════ -->
+    <section class="slide">
+        <div class="slide-content">
+            <div class="principle-badge badge-encapsulation">หลักการ OOP ข้อที่ 2 จาก 4</div>
+            <h2>Encapsulation (การห่อหุ้ม) — ปกป้องสถานะข้อมูล</h2>
+            <div class="two-col">
+                <div>
+                    <p class="subtitle" style="margin-bottom:16px;"><strong class="highlight">แนวคิด:</strong> เก็บข้อมูลเป็นส่วนตัว เปิดเผยผ่านตัวเข้าถึง (getter/setter) ที่มีการ <em>ตรวจสอบความถูกต้อง</em> ทุกคลาสซ่อนฟิลด์ด้วยเครื่องหมาย <code style="color:var(--warning)">#private</code> — ข้อมูลที่ไม่ถูกต้องจะเข้าสู่ระบบไม่ได้</p>
+                    <ul class="pill-list">
+                        <li><span class="tag">ฟิลด์ส่วนตัว</span><span><code>#id</code>, <code>#status</code>, <code>#priority</code>, <code>#partsCost</code>, <code>#laborHours</code>…</span><span class="ln">บรรทัด 906, 932–934</span></li>
+                        <li><span class="tag">การตรวจสอบ</span><span>setter ของสถานะปฏิเสธค่าที่ไม่อยู่ในรายการที่อนุญาต</span><span class="ln">บรรทัด 955–962</span></li>
+                        <li><span class="tag">DataStore</span><span>สถานะ + การบันทึก ซ่อนอยู่หลัง API แบบ CRUD</span><span class="ln">บรรทัด 1253</span></li>
+                        <li><span class="tag">ผลลัพธ์</span><span>พิมพ์ผิดเช่น "In Progresss" จะ error แทนที่จะทำให้ข้อมูลเสีย</span><span class="ln">—</span></li>
+                    </ul>
+                </div>
+                <pre><span class="code-label">repair_shop_management.html</span><span class="cmt">// บรรทัด 932–962 — สถานะที่ถูกห่อหุ้มของ RepairItem</span>
+<span class="line-num">932</span>    <span class="prp">#status</span>;       <span class="cmt">// ENCAPSULATION: private field</span>
+<span class="line-num">933</span>    <span class="prp">#priority</span>;
+<span class="line-num">934</span>    <span class="prp">#createdAt</span>;
+
+<span class="line-num">942</span>    <span class="cmt">// เข้าถึงแบบควบคุม: getters &amp; setters</span>
+<span class="line-num">954</span>    <span class="kw">get</span> status() { <span class="kw">return</span> <span class="prp">this</span>.<span class="prp">#status</span>; }
+<span class="line-num">955</span>    <span class="kw">set</span> status(val) {
+<span class="line-num">956</span>        <span class="kw">const</span> allowed = [<span class="str">"Pending"</span>, <span class="str">"In Progress"</span>,
+<span class="line-num">957</span>            <span class="str">"Completed"</span>, <span class="str">"Ready for Pickup"</span>,
+<span class="line-num">958</span>            <span class="str">"Cancelled"</span>];
+<span class="line-num">959</span>        <span class="kw">if</span> (!allowed.includes(val))
+<span class="line-num">960</span>            <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">`Invalid status: </span>${val}<span class="str">`</span>);
+<span class="line-num">961</span>        <span class="prp">this</span>.<span class="prp">#status</span> = val;
+<span class="line-num">962</span>    }</pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ สไลด์ 7: INHERITANCE ═══════════ -->
+    <section class="slide">
+        <div class="slide-content">
+            <div class="principle-badge badge-inheritance">หลักการ OOP ข้อที่ 3 จาก 4</div>
+            <h2>Inheritance (การสืบทอด) — ใช้ซ้ำและขยายเฉพาะ</h2>
+            <div class="two-col">
+                <div>
+                    <p class="subtitle" style="margin-bottom:16px;"><strong class="highlight">แนวคิด:</strong> คลาสย่อยสืบทอดทุกอย่างจากคลาสแม่ — การสร้าง ID, การจัดการสถานะ/ความเร่งด่วน, การแปลง JSON — แล้วเพิ่มฟิลด์เฉพาะของตัวเอง <code style="color:var(--warning)">ComputerRepair</code> สืบทอดจาก <code style="color:var(--warning)">RepairItem</code> ส่วน <code style="color:var(--warning)">Customer</code> สืบทอดจาก <code style="color:var(--warning)">Person</code></p>
+                    <ul class="pill-list">
+                        <li><span class="tag">RepairItem</span><span>คลาสแม่ของงานซ่อมทั้งหมด — สถานะ, ความเร่งด่วน, ข้อตกลงราคา</span><span class="ln">บรรทัด 929</span></li>
+                        <li><span class="tag">ComputerRepair</span><span>เพิ่ม <code>#os</code>, <code>#deviceName</code>, <code>#partsCost</code>…</span><span class="ln">บรรทัด 986</span></li>
+                        <li><span class="tag">SmartphoneRepair</span><span>เพิ่ม <code>#phoneOS</code>… แทนที่ type และราคา</span><span class="ln">บรรทัด 1055</span></li>
+                        <li><span class="tag">Person → ลูกค้า/ช่าง</span><span>ลำดับชั้นบุคคล ใช้ชื่อ/อีเมล/โทรศัพท์ร่วมกัน</span><span class="ln">บรรทัด 1129–1173</span></li>
+                    </ul>
+                </div>
+                <pre><span class="code-label">repair_shop_management.html</span><span class="cmt">// บรรทัด 929 — คลาสแม่</span>
+<span class="line-num">929</span> <span class="kw">class</span> <span class="cls">RepairItem</span> <span class="kw">extends</span> <span class="cls">BaseEntity</span> {
+<span class="line-num">932</span>     <span class="prp">#status</span>; <span class="prp">#priority</span>; <span class="prp">#createdAt</span>;
+<span class="line-num">945</span>     calculateCost() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"..."</span>); }
+<span class="line-num">948</span>     getDeviceSpecs() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"..."</span>); }
+<span class="line-num">986</span> }
+<span class="cmt">// บรรทัด 986 — คลาสย่อยที่ใช้งานจริง</span>
+<span class="line-num">986</span> <span class="kw">class</span> <span class="cls">ComputerRepair</span> <span class="kw">extends</span> <span class="cls">RepairItem</span> {
+<span class="line-num">987</span>     <span class="prp">#deviceName</span>; <span class="prp">#os</span>; <span class="prp">#issue</span>;
+<span class="line-num">989</span>     <span class="kw">constructor</span>(data = {}) {
+<span class="line-num">990</span>         <span class="kw">super</span>(data.id, data.status, data.priority);
+<span class="line-num">992</span>         <span class="prp">this</span>.<span class="prp">#deviceName</span> = data.deviceName || <span class="str">""</span>;
+<span class="line-num">1004</span>     }
+<span class="line-num">1006</span>     <span class="kw">get</span> type() { <span class="kw">return</span> <span class="str">"Computer"</span>; }
+<span class="line-num">1013</span>     calculateCost() { <span class="cmt">/* $40/ชม. — ดูสไลด์ถัดไป */</span> }
+<span class="line-num">1017</span>     getDeviceSpecs() { <span class="cmt">/* คืนรายละเอียดคอมพิวเตอร์ */</span> }
+<span class="line-num">1053</span> }
+<span class="cmt">// บรรทัด 1157 — ลำดับชั้นบุคคล</span>
+<span class="line-num">1157</span> <span class="kw">class</span> <span class="cls">Customer</span> <span class="kw">extends</span> <span class="cls">Person</span> { ... }</pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ สไลด์ 8: POLYMORPHISM ═══════════ -->
+    <section class="slide">
+        <div class="slide-content">
+            <div class="principle-badge badge-polymorphism">หลักการ OOP ข้อที่ 4 จาก 4</div>
+            <h2>Polymorphism (พหุสัณฐาน) — คำสั่งเดียวกัน พฤติกรรมต่างกัน</h2>
+            <div class="two-col">
+                <div>
+                    <p class="subtitle" style="margin-bottom:16px;"><strong class="highlight">แนวคิด:</strong> ชื่อเมธอดเดียวกัน <code style="color:var(--warning)">calculateCost()</code> ให้ผลต่างกันตามประเภทจริงของวัตถุ ส่วน UI เรียกเมธอดนี้เหมือนกันกับทุกงานซ่อม — แล้วอุปกรณ์แต่ละชนิดคำนวณราคาของตัวเอง <code style="color:var(--warning)">RepairFactory</code> เลือกคลาสย่อยที่ถูกต้องตอนรันไทม์</p>
+                    <ul class="pill-list">
+                        <li><span class="tag">ComputerRepair</span><span>ราคา = อะไหล่ + ชั่วโมง × <strong>$40</strong></span><span class="ln">บรรทัด 1013–1016</span></li>
+                        <li><span class="tag">SmartphoneRepair</span><span>ราคา = อะไหล่ + ชั่วโมง × <strong>$30</strong></span><span class="ln">บรรทัด 1082–1085</span></li>
+                        <li><span class="tag">Factory</span><span><code>RepairFactory.create()</code> คืนคลาสย่อยที่ถูกต้อง</span><span class="ln">บรรทัด 1396–1402</span></li>
+                        <li><span class="tag">UI</span><span>Renderer เรียก <code>r.calculateCost()</code> — ไม่มี <code>if/else</code> ตามประเภท</span><span class="ln">ตาราง/แดชบอร์ด</span></li>
+                    </ul>
+                </div>
+                <pre><span class="code-label">การแทนที่แบบพหุสัณฐาน</span><span class="cmt">// บรรทัด 1013–1016 — ComputerRepair</span>
+<span class="line-num">1013</span> calculateCost() {
+<span class="line-num">1014</span>     <span class="kw">const</span> laborCost = <span class="prp">this</span>.<span class="prp">#laborHours</span> * <span class="num">40</span>;  <span class="cmt">// $40/ชม.</span>
+<span class="line-num">1015</span>     <span class="kw">return</span> +(laborCost + <span class="prp">this</span>.<span class="prp">#partsCost</span>).toFixed(<span class="num">2</span>);
+<span class="line-num">1016</span> }
+<span class="cmt">// บรรทัด 1082–1085 — SmartphoneRepair</span>
+<span class="line-num">1082</span> calculateCost() {
+<span class="line-num">1083</span>     <span class="kw">const</span> laborCost = <span class="prp">this</span>.<span class="prp">#laborHours</span> * <span class="num">30</span>;  <span class="cmt">// $30/ชม.</span>
+<span class="line-num">1084</span>     <span class="kw">return</span> +(laborCost + <span class="prp">this</span>.<span class="prp">#partsCost</span>).toFixed(<span class="num">2</span>);
+<span class="line-num">1085</span> }
+<span class="cmt">// บรรทัด 1396–1402 — เลือกคลาสตอนรันไทม์</span>
+<span class="line-num">1396</span> <span class="kw">const</span> <span class="cls">RepairFactory</span> = {
+<span class="line-num">1397</span>     create(data) {
+<span class="line-num">1398</span>         <span class="kw">switch</span> (data.deviceType) {
+<span class="line-num">1399</span>             <span class="kw">case</span> <span class="str">"Computer"</span>:   <span class="kw">return new</span> <span class="cls">ComputerRepair</span>(data);
+<span class="line-num">1400</span>             <span class="kw">case</span> <span class="str">"Smartphone"</span>: <span class="kw">return new</span> <span class="cls">SmartphoneRepair</span>(data);
+<span class="line-num">1401</span>         }
+<span class="line-num">1402</span>     }
+<span class="line-num">1403</span> };</pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ สไลด์ 9: POLYMORPHISM ในทางปฏิบัติ ═══════════ -->
+    <section class="slide">
+        <div class="slide-content">
+            <div class="kicker">การสาธิต · ตัวอย่างจริง</div>
+            <h2>Polymorphism ในทางปฏิบัติ — งานซ่อม 2 รายการ 1 คำสั่ง</h2>
+            <p class="subtitle" style="margin-bottom:24px;">วัตถุทั้งสองสร้างจาก factory เดียวกัน และแสดงผลด้วยฟังก์ชัน UI เดียวกัน เฉพาะ <em>คลาส</em> ที่ต่างกัน — ดังนั้นผลลัพธ์จึงต่างกัน</p>
+            <div class="grid-2">
+                <pre><span class="code-label">ตัวอย่างการรันจริง</span><span class="kw">const</span> repair1 = <span class="cls">RepairFactory</span>.create({
+    deviceType: <span class="str">"Computer"</span>, partsCost: <span class="num">45</span>, laborHours: <span class="num">3</span>
+});
+<span class="kw">const</span> repair2 = <span class="cls">RepairFactory</span>.create({
+    deviceType: <span class="str">"Smartphone"</span>, partsCost: <span class="num">35</span>, laborHours: <span class="num">1</span>
+});
+
+<span class="cmt">// ชื่อเมธอดเดียวกัน — สูตรต่างกัน:</span>
+repair1.calculateCost()  <span class="cmt">// → 45 + 3×$40 = $165.00 💻</span>
+repair2.calculateCost()  <span class="cmt">// → 35 + 1×$30 =  $65.00 📱</span></pre>
+                <div>
+                    <table class="compare">
+                        <tr><th>เมธอด</th><th>ComputerRepair</th><th>SmartphoneRepair</th></tr>
+                        <tr><td><code>type</code></td><td>"Computer"</td><td>"Smartphone"</td></tr>
+                        <tr><td><code>calculateCost()</code></td><td>อะไหล่ + ชม. × $40</td><td>อะไหล่ + ชม. × $30</td></tr>
+                        <tr><td><code>getDeviceSpecs()</code></td><td>{ os, … }</td><td>{ phoneOS, … }</td></tr>
+                        <tr><td><code>displayInfo</code></td><td>💻 Dell XPS 15</td><td>📱 iPhone 15 Pro</td></tr>
+                    </table>
+                    <p style="font-size:.8rem; color:var(--muted); margin-top:16px; line-height:1.8;">แดชบอร์ด ตาราง และบิล เรียกเมธอดเหล่านี้แบบทั่วไป — <strong>การเพิ่มอุปกรณ์ชนิดใหม่ไม่ต้องแก้ UI เลย</strong> แค่เพิ่มคลาสย่อยอีก 1 คลาส นี่คือคุณค่าที่แท้จริงของ polymorphism</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ สไลด์ 10: DATASTORE ═══════════ -->
+    <section class="slide">
+        <div class="slide-content">
+            <div class="kicker">เจาะลึก · ชั้นข้อมูล</div>
+            <h2>DataStore — การจัดเก็บข้อมูลแบบห่อหุ้ม</h2>
+            <div class="two-col">
+                <div>
+                    <p class="subtitle" style="margin-bottom:16px;">สถานะทั้งหมด — งานซ่อม, ลูกค้า, ช่างเทคนิค, ใบแจ้งหนี้ — อยู่ในวัตถุ <code style="color:var(--warning)">DataStore</code> ตัวเดียว (บรรทัด 1253) ส่วน UI ไม่เคยแตะ <code style="color:var(--warning)">localStorage</code> โดยตรง เรียกผ่านเมธอด CRUD สาธารณะเท่านั้น ข้อมูลถูกโหลดกลับผ่าน <code style="color:var(--warning)">RepairFactory</code> แบบพหุสัณฐาน ทำให้บันทึกที่เก็บไว้กลับมาเป็นคลาสย่อยที่ถูกต้อง</p>
+                    <ul class="pill-list">
+                        <li><span class="tag">สถานะส่วนตัว</span><span><code>#repairs</code>, <code>#customers</code>, <code>#technicians</code>, <code>#invoices</code></span><span class="ln">บรรทัด 1254–1257</span></li>
+                        <li><span class="tag">API สาธารณะ</span><span><code>addRepair</code>, <code>updateRepair</code>, <code>deleteRepair</code>, <code>getStats</code>…</span><span class="ln">บรรทัด 1270+</span></li>
+                        <li><span class="tag">Observer</span><span><code>subscribe()</code> รีเฟรช UI อัตโนมัติทุกครั้งที่ข้อมูลเปลี่ยน</span><span class="ln">บรรทัด 1268</span></li>
+                        <li><span class="tag">การกู้คืน</span><span><code>#load()</code> สร้างวัตถุใหม่ผ่าน factory → คงชนิดคลาสไว้</span><span class="ln">บรรทัด 1260–1264</span></li>
+                    </ul>
+                </div>
+                <pre><span class="code-label">repair_shop_management.html</span><span class="cmt">// บรรทัด 1253–1278 — ที่เก็บข้อมูลแบบห่อหุ้ม</span>
+<span class="line-num">1253</span> <span class="kw">class</span> <span class="cls">DataStore</span> {
+<span class="line-num">1254</span>     <span class="prp">#repairs</span> = [];
+<span class="line-num">1255</span>     <span class="prp">#customers</span> = [];
+<span class="line-num">1256</span>     <span class="prp">#technicians</span> = [];
+<span class="line-num">1257</span>     <span class="prp">#invoices</span> = [];
+<span class="line-num">1259</span>     <span class="cmt">// การบันทึกซ่อนจากโลกภายนอกโดยสิ้นเชิง</span>
+<span class="line-num">1260</span>     <span class="prp">#load</span>() {
+<span class="line-num">1261</span>         <span class="kw">const</span> raw = localStorage.getItem(<span class="str">"repairShopData"</span>);
+<span class="line-num">1262</span>         <span class="cmt">// …สร้างใหม่ผ่าน RepairFactory.create(r)</span>
+<span class="line-num">1264</span>     }
+<span class="line-num">1266</span>     <span class="prp">#save</span>() {
+<span class="line-num">1267</span>         localStorage.setItem(<span class="str">"repairShopData"</span>, JSON.stringify(d));
+<span class="line-num">1268</span>     }
+<span class="line-num">1270</span>     <span class="cmt">// API CRUD สาธารณะเท่านั้น — ไม่มีการเข้าถึงโดยตรง</span>
+<span class="line-num">1271</span>     <span class="kw">get</span> repairs() { <span class="kw">return</span> [...<span class="prp">this</span>.<span class="prp">#repairs</span>]; }
+<span class="line-num">1272</span>     addRepair(data) {
+<span class="line-num">1273</span>         <span class="kw">const</span> repair = <span class="cls">RepairFactory</span>.create(data);
+<span class="line-num">1274</span>         <span class="prp">this</span>.<span class="prp">#repairs</span>.push(repair);
+<span class="line-num">1275</span>         <span class="prp">this</span>.<span class="prp">#save</span>();
+<span class="line-num">1276</span>         <span class="kw">return</span> repair;
+<span class="line-num">1277</span>     }
+<span class="line-num">1278</span> }</pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ สไลด์ 11: สรุป ═══════════ -->
+    <section class="slide">
+        <div class="slide-content">
+            <div class="kicker">บทสรุป</div>
+            <h2>สรุป — หลักการทั้ง 4 ในระบบเดียว</h2>
+            <table class="compare" style="margin-bottom:26px;">
+                <tr><th>หลักการ</th><th>ปรากฏที่ไหน</th><th>บรรทัด</th><th>ให้อะไรกับระบบ</th></tr>
+                <tr><td><span class="badge badge-abstraction" style="margin:0">Abstraction</span></td><td><code>BaseEntity</code> · <code>RepairItem</code> คลาสนามธรรม</td><td>905, 929</td><td>ข้อตกลงร่วม; UI อ้างอิงอินเทอร์เฟซ ไม่ใช่คลาสรูปธรรม</td></tr>
+                <tr><td><span class="badge badge-encapsulation" style="margin:0">Encapsulation</span></td><td>ฟิลด์ <code>#private</code>, setter ที่ตรวจสอบ, <code>DataStore</code></td><td>906, 932, 956, 1253</td><td>ความปลอดภัยของข้อมูล; ปฏิเสธสถานะผิด; ซ่อนการจัดเก็บ</td></tr>
+                <tr><td><span class="badge badge-inheritance" style="margin:0">Inheritance</span></td><td><code>ComputerRepair</code>/<code>SmartphoneRepair</code> ← <code>RepairItem</code>; <code>Customer</code>/<code>Technician</code> ← <code>Person</code></td><td>986, 1055, 1157, 1173</td><td>ใช้โค้ดซ้ำ — ตรรกะร่วมเขียนครั้งเดียว</td></tr>
+                <tr><td><span class="badge badge-polymorphism" style="margin:0">Polymorphism</span></td><td>การแทนที่ <code>calculateCost()</code> / <code>getDeviceSpecs()</code>, <code>RepairFactory</code></td><td>1013, 1082, 1396</td><td>คำสั่งเดียวกัน ผลลัพธ์ตามชนิด; ขยายง่ายด้วยการเพิ่มคลาสย่อย 1 คลาส</td></tr>
+            </table>
+            <div style="background:rgba(74,222,128,.08); border:1px solid rgba(74,222,128,.3); border-radius:12px; padding:18px 22px; font-size:.95rem; line-height:1.8;">
+                <strong style="color:var(--success);">✅ ผลงานครบถ้วน:</strong> แก้ปัญหาจริงด้วย OOP · ใช้หลักการครบทั้ง 4 และตรวจสอบได้ด้วยหมายเลขบรรทัด · GUI ใช้งานได้จริง (แดชบอร์ด, CRUD, ค้นหา, บิล) · ข้อมูลบันทึกข้ามเซสชัน · <strong>เปิด <code style="color:var(--warning)">repair_shop_management.html</code> เพื่อสาธิตสด</strong>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ สไลด์ 12: ขอบคุณ ═══════════ -->
+    <section class="slide title-slide">
+        <div class="slide-content">
+            <div class="kicker">คำถาม-คำตอบ</div>
+            <h1 style="font-size:3rem;">ขอบคุณครับ! 🙌</h1>
+            <div class="divider"></div>
+            <p class="subtitle">สาธิตสด: เปิด <code style="color:var(--warning)">repair_shop_management.html</code><br>สไลด์: <code style="color:var(--warning)">presentation.html</code></p>
+            <div class="title-meta" style="margin-top:34px;">
+                <span>🔧 RepairShop Pro</span>
+                <span>📚 OOP: Abstraction · Encapsulation · Inheritance · Polymorphism</span>
+                <span>🎓 ยินดีตอบคำถาม</span>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="progress" id="progress"></div>
+<button class="nav-btn nav-prev" onclick="go(-1)">‹</button>
+<button class="nav-btn nav-next" onclick="go(1)">›</button>
+<div class="dots" id="dots"></div>
+<div class="nav-hint">← → ลูกศร · spacebar · คลิกจุดนำทาง</div>
+<div class="slide-number" id="slideNum">1 / 12</div>
+
+<script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const dotsWrap = document.getElementById("dots");
+    let current = 0;
+
+    slides.forEach((_, i) => {
+        const d = document.createElement("div");
+        d.className = "dot" + (i === 0 ? " active" : "");
+        d.onclick = () => goTo(i);
+        dotsWrap.appendChild(d);
+    });
+    const dots = Array.from(dotsWrap.children);
+
+    function goTo(i) {
+        current = Math.max(0, Math.min(slides.length - 1, i));
+        slides.forEach((s, idx) => s.classList.toggle("active", idx === current));
+        dots.forEach((d, idx) => d.classList.toggle("active", idx === current));
+        document.getElementById("slideNum").textContent = (current + 1) + " / " + slides.length;
+        document.getElementById("progress").style.width = ((current + 1) / slides.length * 100) + "%";
+    }
+
+    function go(dir) { goTo(current + dir); }
+
+    document.addEventListener("keydown", e => {
+        if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") { e.preventDefault(); go(1); }
+        if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); go(-1); }
+        if (e.key === "Home") goTo(0);
+        if (e.key === "End") goTo(slides.length - 1);
+    });
+
+    goTo(0);
+</script>
+</body>
+</html>
