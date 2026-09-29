@@ -42,7 +42,7 @@
         position: absolute;
         inset: 0;
         display: none;
-        padding: 56px 72px;
+        padding: 30px 56px 40px;
         flex-direction: column;
         background: linear-gradient(135deg, var(--bg) 0%, #16233f 100%);
         animation: fade .35s ease;
@@ -59,17 +59,17 @@
         align-items: center;
         gap: 8px;
         color: var(--accent);
-        font-size: .8rem;
+        font-size: .72rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: .12em;
-        margin-bottom: 14px;
+        margin-bottom: 10px;
     }
     .kicker::before { content: ""; width: 26px; height: 2px; background: var(--accent); }
 
     h1 { font-size: 2.6rem; line-height: 1.2; margin-bottom: 12px; font-weight: 800; }
-    h2 { font-size: 1.9rem; line-height: 1.35; margin-bottom: 20px; font-weight: 800; }
-    .subtitle { font-size: 1.1rem; color: var(--muted); max-width: 720px; line-height: 1.8; }
+    h2 { font-size: 1.42rem; line-height: 1.3; margin-bottom: 12px; font-weight: 800; }
+    .subtitle { font-size: .9rem; color: var(--muted); max-width: 720px; line-height: 1.6; }
     .highlight { color: var(--accent); }
 
     .slide-number {
@@ -91,7 +91,7 @@
 
     /* ── GRID / LAYOUT ── */
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
-    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
     .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 
     /* ── FEATURE CARDS ── */
@@ -99,13 +99,13 @@
         background: rgba(255,255,255,.05);
         border: 1px solid rgba(255,255,255,.09);
         border-radius: 14px;
-        padding: 22px;
+        padding: 16px;
         transition: transform .2s ease, border-color .2s ease;
     }
     .card:hover { transform: translateY(-3px); border-color: rgba(56,189,248,.4); }
-    .card .emoji { font-size: 1.9rem; margin-bottom: 10px; }
-    .card h3 { font-size: 1.02rem; margin-bottom: 6px; font-weight: 700; }
-    .card p { font-size: .85rem; color: var(--muted); line-height: 1.75; }
+    .card .emoji { font-size: 1.5rem; margin-bottom: 6px; }
+    .card h3 { font-size: .95rem; margin-bottom: 4px; font-weight: 700; }
+    .card p { font-size: .78rem; color: var(--muted); line-height: 1.6; }
 
     /* ── CODE BLOCKS ── */
     pre {
@@ -115,6 +115,8 @@
         padding: 20px 22px;
         font-size: .82rem;
         line-height: 1.7;
+        max-height: 78vh;
+        overflow-y: auto;
         overflow-x: auto;
         position: relative;
     }
@@ -135,17 +137,18 @@
         border-radius: 20px;
         letter-spacing: .06em;
     }
+    pre .skip { color: #64748b; text-align: center; display: block; line-height: 1.2; user-select: none; }
 
     /* ── PRINCIPLE BADGE ── */
     .principle-badge {
         display: inline-block;
         padding: 4px 16px;
         border-radius: 30px;
-        font-size: .75rem;
+        font-size: .7rem;
         font-weight: 700;
         letter-spacing: .08em;
         text-transform: uppercase;
-        margin-bottom: 16px;
+        margin-bottom: 10px;
     }
     .badge-abstraction { background: rgba(167,139,250,.15); color: var(--purple); border: 1px solid rgba(167,139,250,.4); }
     .badge-encapsulation { background: rgba(56,189,248,.15); color: var(--accent); border: 1px solid rgba(56,189,248,.4); }
@@ -154,16 +157,16 @@
 
     .pill-list { list-style: none; }
     .pill-list li {
-        padding: 8px 0;
+        padding: 4px 0;
         border-bottom: 1px solid rgba(255,255,255,.07);
-        font-size: .92rem;
+        font-size: .78rem;
         color: var(--text);
         display: flex;
         gap: 10px;
         align-items: baseline;
     }
     .pill-list li:last-child { border-bottom: none; }
-    .pill-list .tag { color: var(--accent); font-weight: 700; font-size: .78rem; min-width: 150px; text-transform: uppercase; letter-spacing: .04em; }
+    .pill-list .tag { color: var(--accent); font-weight: 700; font-size: .7rem; min-width: 128px; text-transform: uppercase; letter-spacing: .04em; }
     .pill-list .ln { color: var(--muted); font-size: .72rem; white-space: nowrap; }
 
     /* ── CLASS HIERARCHY DIAGRAM ── */
@@ -172,15 +175,15 @@
         background: rgba(255,255,255,.06);
         border: 1px solid rgba(255,255,255,.14);
         border-radius: 10px;
-        padding: 12px 24px;
+        padding: 8px 20px;
         text-align: center;
-        min-width: 280px;
+        min-width: 240px;
     }
     .h-node .name { font-weight: 800; font-size: 1rem; }
     .h-node .sub { font-size: .72rem; color: var(--muted); font-family: Consolas, monospace; }
     .h-node.abstract { border-style: dashed; border-color: var(--purple); }
     .h-node.abstract .name { color: var(--purple); font-style: italic; }
-    .h-connector { width: 2px; height: 26px; background: rgba(255,255,255,.25); }
+    .h-connector { width: 2px; height: 18px; background: rgba(255,255,255,.25); }
     .h-branch { display: flex; gap: 24px; }
     .h-label { font-size: .68rem; color: var(--muted); margin-top: 4px; letter-spacing: .03em; }
 
@@ -205,9 +208,9 @@
     .divider { width: 60px; height: 4px; background: linear-gradient(90deg, var(--accent), var(--purple)); border-radius: 2px; margin: 18px 0; }
 
     /* ── COMPARISON TABLE ── */
-    .compare { width: 100%; border-collapse: collapse; font-size: .88rem; }
-    .compare th, .compare td { padding: 10px 14px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.08); }
-    .compare th { color: var(--accent); font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; }
+    .compare { width: 100%; border-collapse: collapse; font-size: .75rem; }
+    .compare th, .compare td { padding: 7px 10px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.08); }
+    .compare th { color: var(--accent); font-size: .68rem; text-transform: uppercase; letter-spacing: .08em; }
     .compare td code { color: var(--warning); font-size: .8rem; }
 
     /* ── PROGRESS BAR ── */
@@ -244,18 +247,26 @@
     .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.2); cursor: pointer; transition: all .2s ease; }
     .dot.active { background: var(--accent); transform: scale(1.25); }
 
-    .two-col { display: grid; grid-template-columns: 1fr 1.1fr; gap: 30px; align-items: center; }
+    .two-col { display: grid; grid-template-columns: 1fr 1.1fr; gap: 24px; align-items: center; }
+    .two-col pre { font-size: .6rem; line-height: 1.4; max-height: 100%; overflow-y: auto; }
+    .slide-content { max-height: 100%; }
+    .slide.active { overflow: hidden; }
     .check-list { list-style: none; }
-    .check-list li { padding: 9px 0; font-size: .95rem; display: flex; gap: 12px; align-items: center; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .check-list li { padding: 5px 0; font-size: .8rem; display: flex; gap: 12px; align-items: center; border-bottom: 1px solid rgba(255,255,255,.06); }
     .check-list li::before { content: "✓"; color: var(--success); font-weight: 800; }
     .check-list li:last-child { border-bottom: none; }
 
     @media (max-width: 900px) {
-        .slide { padding: 40px 28px; overflow-y: auto; }
+        .slide, .slide.active { padding: 26px 20px 60px; overflow-y: auto; }
         h1 { font-size: 2rem; }
+        h2 { font-size: 1.3rem; }
+        .slide-content { justify-content: flex-start; max-width: 100%; }
         .grid-2, .two-col { grid-template-columns: 1fr; }
         .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
         .nav-btn { display: none; }
+        .nav-hint { display: none; }
+        .two-col pre { font-size: .68rem; line-height: 1.5; max-height: 60vh; }
+        .two-col pre .line-num { width: 24px; margin-right: 8px; }
     }
 </style>
 </head>
@@ -387,14 +398,18 @@
 <span class="line-num">19</span>        }
 <span class="line-num">20</span>        <span class="prp">this</span>.<span class="prp">#id</span> = id || <span class="cls">BaseEntity</span>._nextId++;
 <span class="line-num">21</span>    }
+<span class="line-num">23</span>    <span class="kw">get</span> id() { <span class="kw">return</span> <span class="prp">this</span>.<span class="prp">#id</span>; }
 <span class="line-num">27</span>    <span class="cmt">// ABSTRACT methods — must be overridden</span>
 <span class="line-num">28</span>    <span class="kw">get</span> displayInfo() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"Abstract getter must be implemented."</span>); }
 <span class="line-num">29</span>    <span class="kw">get</span> type() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"Abstract getter must be implemented."</span>); }
 <span class="line-num">30</span>    toJSON() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"Abstract method must be implemented."</span>); }
+<span class="line-num">31</span>}
+<span class="skip">    ⋮</span>
 <span class="cmt">// RepairItem (บรรทัด 37) ประกาศข้อตกลงของงานซ่อมทุกชิ้น:</span>
 <span class="line-num">55</span>    <span class="kw">get</span> type() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"Subclasses must declare device type."</span>); }
 <span class="line-num">58</span>    calculateCost() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"Subclasses must implement calculateCost()."</span>); }
-<span class="line-num">61</span>    getDeviceSpecs() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"Subclasses must implement getDeviceSpecs()."</span>); }</pre>
+<span class="line-num">61</span>    getDeviceSpecs() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"Subclasses must implement getDeviceSpecs()."</span>); }
+<span class="line-num">64</span>    <span class="kw">get</span> displayInfo() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"Subclasses must implement displayInfo."</span>); }</pre>
             </div>
         </div>
     </section>
@@ -421,15 +436,21 @@
 <span class="line-num">40</span>     <span class="prp">#createdAt</span>;
 <span class="line-num">41</span>     <span class="prp">#paymentStatus</span>; <span class="cmt">// "Unpaid" | "Paid"</span>
 <span class="line-num">43</span>     <span class="kw">static</span> PAYMENT_STATUSES = [<span class="str">"Unpaid"</span>, <span class="str">"Paid"</span>];
-
+<span class="skip">⋮</span>
+<span class="cmt">// บรรทัด 68–71 — setter ที่ตรวจสอบสถานะงานซ่อม</span>
 <span class="line-num">68</span>     <span class="kw">set</span> status(val) {
 <span class="line-num">69</span>         <span class="kw">const</span> allowed = [<span class="str">"Pending"</span>, <span class="str">"In Progress"</span>, <span class="str">"Completed"</span>, <span class="str">"Ready for Pickup"</span>, <span class="str">"Cancelled"</span>];
 <span class="line-num">70</span>         <span class="kw">if</span> (!allowed.includes(val)) <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">`Invalid status: </span>${val}<span class="str">`</span>);
 <span class="line-num">71</span>         <span class="prp">this</span>.<span class="prp">#status</span> = val;
-<span class="cmt">// บรรทัด 78–80 — setter ที่ตรวจสอบสถานะการชำระเงิน</span>
+<span class="line-num">72</span>     }
+<span class="cmt">// บรรทัด 74–82 — getter/setter สถานะการชำระเงิน</span>
+<span class="line-num">74</span>     <span class="kw">get</span> paymentStatus() { <span class="kw">return</span> <span class="prp">this</span>.<span class="prp">#paymentStatus</span>; }
 <span class="line-num">78</span>     <span class="kw">set</span> paymentStatus(val) {
 <span class="line-num">79</span>         <span class="kw">if</span> (!<span class="cls">RepairItem</span>.PAYMENT_STATUSES.includes(val)) <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">`Invalid payment status: </span>${val}<span class="str">`</span>);
-<span class="line-num">80</span>         <span class="prp">this</span>.<span class="prp">#paymentStatus</span> = val;</pre>
+<span class="line-num">80</span>         <span class="prp">this</span>.<span class="prp">#paymentStatus</span> = val;
+<span class="line-num">81</span>     }
+<span class="skip">⋮</span>
+<span class="line-num">82</span> }</pre>
             </div>
         </div>
     </section>
@@ -452,16 +473,30 @@
                 <pre><span class="code-label">app.js</span><span class="cmt">// บรรทัด 37 — คลาสแม่</span>
 <span class="line-num">37</span> <span class="kw">class</span> <span class="cls">RepairItem</span> <span class="kw">extends</span> <span class="cls">BaseEntity</span> {
 <span class="line-num">38</span>     <span class="prp">#status</span>; <span class="prp">#priority</span>; <span class="prp">#createdAt</span>; <span class="prp">#paymentStatus</span>;
-<span class="line-num">58</span>     calculateCost() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"..."</span>); }
-<span class="cmt">// บรรทัด 107 — คลาสย่อยที่ใช้งานจริง</span>
+<span class="skip">⋮</span>
+<span class="line-num">58</span>     calculateCost() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"Subclasses must implement calculateCost()."</span>); }
+<span class="cmt">// บรรทัด 107 — คลาสย่อยที่ใช้งานจริง (สืบทอด + เพิ่มฟิลด์เฉพาะ)</span>
 <span class="line-num">107</span><span class="kw">class</span> <span class="cls">ComputerRepair</span> <span class="kw">extends</span> <span class="cls">RepairItem</span> {
-<span class="line-num">108</span>    <span class="prp">#deviceName</span>; <span class="prp">#os</span>; <span class="prp">#issue</span>; <span class="prp">#partsCost</span>; <span class="prp">#laborHours</span>…
+<span class="line-num">108</span>    <span class="prp">#deviceName</span>; <span class="prp">#os</span>; <span class="prp">#issue</span>; <span class="prp">#partsCost</span>; <span class="prp">#laborHours</span>; <span class="prp">#technicianId</span>;
 <span class="line-num">117</span>    <span class="kw">constructor</span>(data = {}) {
 <span class="line-num">118</span>        <span class="kw">super</span>(data.id, data.status, data.priority, data.paymentStatus);
+<span class="line-num">119</span>        <span class="prp">this</span>.<span class="prp">#deviceName</span> = data.deviceName || <span class="str">"Unknown PC"</span>;
+<span class="line-num">120</span>        <span class="prp">this</span>.<span class="prp">#os</span> = data.os || <span class="str">"Windows"</span>;
+<span class="line-num">121</span>        <span class="prp">this</span>.<span class="prp">#issue</span> = data.issue || <span class="str">""</span>;
+<span class="line-num">122</span>        <span class="prp">this</span>.<span class="prp">#partsCost</span> = +data.partsCost || <span class="num">0</span>;
+<span class="line-num">123</span>        <span class="prp">this</span>.<span class="prp">#laborHours</span> = +data.laborHours || <span class="num">0</span>;
+<span class="line-num">124</span>    }
+<span class="skip">⋮</span>
 <span class="line-num">131</span>    <span class="kw">get</span> type() { <span class="kw">return</span> <span class="str">"Computer"</span>; }
-<span class="line-num">134</span>    calculateCost() { <span class="cmt">/* ฿40/ชม. — ดูสไลด์ถัดไป */</span> }
-<span class="line-num">140</span>    getDeviceSpecs() { <span class="cmt">/* คืนรายละเอียดคอมพิวเตอร์ */</span> }
-<span class="cmt">// บรรทัด 278 — ลำดับชั้นบุคคล</span>
+<span class="line-num">134</span>    calculateCost() {
+<span class="line-num">135</span>        <span class="kw">const</span> laborCost = <span class="prp">this</span>.<span class="prp">#laborHours</span> * <span class="num">40</span>;  <span class="cmt">// ฿40/ชม.</span>
+<span class="line-num">136</span>        <span class="kw">return</span> +(<span class="prp">this</span>.<span class="prp">#partsCost</span> + laborCost).toFixed(<span class="num">2</span>);
+<span class="line-num">137</span>    }
+<span class="skip">⋮</span>
+<span class="line-num">140</span>    getDeviceSpecs() {
+<span class="line-num">141</span>        <span class="kw">return</span> { deviceName: <span class="prp">this</span>.<span class="prp">#deviceName</span>, os: <span class="prp">this</span>.<span class="prp">#os</span>, issue: <span class="prp">this</span>.<span class="prp">#issue</span> };
+<span class="line-num">142</span>    }
+<span class="cmt">// บรรทัด 278 — ลำดับชั้นบุคคล (Customer สืบทอดจาก Person)</span>
 <span class="line-num">278</span><span class="kw">class</span> <span class="cls">Customer</span> <span class="kw">extends</span> <span class="cls">Person</span> {
 <span class="line-num">279</span>    <span class="prp">#loyaltyTier</span>;  <span class="cmt">// เพิ่มของตัวเอง: ระดับสมาชิก</span></pre>
             </div>
@@ -562,19 +597,25 @@ repair2.calculateCost()  <span class="cmt">// → 35 + 1×฿30 =  ฿65.00 📱
 <span class="line-num">377</span>    <span class="prp">#technicians</span> = [];
 <span class="line-num">378</span>    <span class="prp">#invoices</span> = [];
 <span class="line-num">379</span>    <span class="prp">#listeners</span> = [];
+<span class="skip">⋮</span>
 <span class="line-num">384</span>    <span class="prp">#load</span>() {
 <span class="line-num">386</span>        <span class="kw">const</span> raw = localStorage.getItem(<span class="str">"repairShopData"</span>);
+<span class="skip">⋮</span>
 <span class="line-num">393</span>        <span class="kw">this</span>.<span class="prp">#repairs</span> = (d.repairs || []).map(r =&gt; <span class="cls">RepairFactory</span>.create(r));
+<span class="skip">⋮</span>
 <span class="line-num">401</span>    <span class="prp">#save</span>() {
+<span class="skip">⋮</span>
 <span class="line-num">408</span>        localStorage.setItem(<span class="str">"repairShopData"</span>, JSON.stringify(d));
 <span class="line-num">409</span>        <span class="kw">this</span>.<span class="prp">#notify</span>();
+<span class="line-num">410</span>    }
 <span class="line-num">413</span>    subscribe(fn) { <span class="kw">this</span>.<span class="prp">#listeners</span>.push(fn); }
 <span class="line-num">419</span>    addRepair(data) {
 <span class="line-num">420</span>        <span class="kw">const</span> repair = <span class="cls">RepairFactory</span>.create(data);
 <span class="line-num">421</span>        <span class="kw">this</span>.<span class="prp">#repairs</span>.push(repair);
 <span class="line-num">422</span>        <span class="kw">this</span>.<span class="prp">#reconcileInvoices</span>();
 <span class="line-num">423</span>        <span class="kw">this</span>.<span class="prp">#save</span>();
-<span class="line-num">424</span>        <span class="kw">return</span> repair;</pre>
+<span class="line-num">424</span>        <span class="kw">return</span> repair;
+<span class="line-num">425</span>    }</pre>
             </div>
         </div>
     </section>
