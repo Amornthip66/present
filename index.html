@@ -138,6 +138,15 @@
         letter-spacing: .06em;
     }
     pre .skip { color: #64748b; text-align: center; display: block; line-height: 1.2; user-select: none; }
+    pre .skip .skip-range { color: #7c8aa0; font-size: .8em; letter-spacing: .02em; }
+    .code-note {
+        font-size: .74rem;
+        color: var(--muted);
+        line-height: 1.6;
+        padding: 2px 4px;
+    }
+    .code-note code { color: var(--warning); }
+    .code-note strong { color: var(--accent); }
 
     /* ── PRINCIPLE BADGE ── */
     .principle-badge {
@@ -389,7 +398,7 @@
                         <li><span class="tag">ผลลัพธ์</span><span>ส่วน UI เรียกผ่านอินเทอร์เฟซเดียวกัน — ไม่สนใจประเภทอุปกรณ์</span><span class="ln">renderer บรรทัด 1021+</span></li>
                     </ul>
                 </div>
-                <pre><span class="code-label">app.js</span><span class="cmt">// บรรทัด 13–30 — BaseEntity นามธรรม</span>
+                <pre><span class="code-label">app.js</span><span class="cmt">// บรรทัด 13–64 — BaseEntity + RepairItem (นามธรรม)</span>
 <span class="line-num">13</span><span class="kw">class</span> <span class="cls">BaseEntity</span> {
 <span class="line-num">14</span>    <span class="prp">#id</span>; <span class="cmt">// Private field (ENCAPSULATION)</span>
 <span class="line-num">16</span>    <span class="kw">constructor</span>(id = <span class="num">null</span>) {
@@ -404,12 +413,19 @@
 <span class="line-num">29</span>    <span class="kw">get</span> type() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"Abstract getter must be implemented."</span>); }
 <span class="line-num">30</span>    toJSON() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"Abstract method must be implemented."</span>); }
 <span class="line-num">31</span>}
-<span class="skip">    ⋮</span>
-<span class="cmt">// RepairItem (บรรทัด 37) ประกาศข้อตกลงของงานซ่อมทุกชิ้น:</span>
+<span class="skip">⋮ <span class="skip-range">(ข้าม 32–36)</span></span>
+<span class="line-num">37</span> <span class="kw">class</span> <span class="cls">RepairItem</span> <span class="kw">extends</span> <span class="cls">BaseEntity</span> { <span class="cmt">// คลาสนามธรรม — ข้อตกลงของงานซ่อมทุกชิ้น</span>
+<span class="skip">⋮ <span class="skip-range">(ข้าม 38–54)</span></span>
 <span class="line-num">55</span>    <span class="kw">get</span> type() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"Subclasses must declare device type."</span>); }
 <span class="line-num">58</span>    calculateCost() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"Subclasses must implement calculateCost()."</span>); }
 <span class="line-num">61</span>    getDeviceSpecs() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"Subclasses must implement getDeviceSpecs()."</span>); }
 <span class="line-num">64</span>    <span class="kw">get</span> displayInfo() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"Subclasses must implement displayInfo."</span>); }</pre>
+<div class="code-note">ผลลัพธ์: UI เรียกผ่านอินเทอร์เฟซเดียวกัน (<code>r.type</code>, <code>r.calculateCost()</code>…) ไม่สนประเภทอุปกรณ์ — <strong>renderer บรรทัด 1021–1024:</strong></div>
+<pre><span class="code-label">app.js</span><span class="cmt">// บรรทัด 1021–1024 — UI เรียกอินเทอร์เฟซเดียวกัน</span>
+<span class="line-num">1021</span>rowsHtml += `
+<span class="line-num">1022</span>    &lt;td&gt;${r.displayInfo}&lt;/td&gt;
+<span class="line-num">1023</span>    &lt;td&gt;${r.type}&lt;/td&gt;
+<span class="line-num">1024</span>    &lt;td&gt;${r.calculateCost().toFixed(2)}&lt;/td&gt;`; <span class="cmt">// ไม่มี if/else ตามประเภท</span></pre>
             </div>
         </div>
     </section>
@@ -429,14 +445,17 @@
                         <li><span class="tag">ผลลัพธ์</span><span>พิมพ์ผิดเช่น "In Progresss" จะ error แทนที่จะทำให้ข้อมูลเสีย</span><span class="ln">—</span></li>
                     </ul>
                 </div>
-                <pre><span class="code-label">app.js</span><span class="cmt">// บรรทัด 37–43 — สถานะที่ถูกห่อหุ้มของ RepairItem</span>
+                <pre><span class="code-label">app.js</span><span class="cmt">// บรรทัด 13–14 — #id ของ BaseEntity (คลาสอื่นก็ใช้แบบเดียวกัน)</span>
+<span class="line-num">14</span>    <span class="prp">#id</span>; <span class="cmt">// Private field (ENCAPSULATION)</span>
+<span class="skip">⋮ <span class="skip-range">(ข้าม 15–36)</span></span>
+<span class="cmt">// บรรทัด 37–43 — สถานะที่ถูกห่อหุ้มของ RepairItem</span>
 <span class="line-num">37</span> <span class="kw">class</span> <span class="cls">RepairItem</span> <span class="kw">extends</span> <span class="cls">BaseEntity</span> {
 <span class="line-num">38</span>     <span class="prp">#status</span>;        <span class="cmt">// ENCAPSULATION: private field</span>
 <span class="line-num">39</span>     <span class="prp">#priority</span>;
 <span class="line-num">40</span>     <span class="prp">#createdAt</span>;
 <span class="line-num">41</span>     <span class="prp">#paymentStatus</span>; <span class="cmt">// "Unpaid" | "Paid"</span>
 <span class="line-num">43</span>     <span class="kw">static</span> PAYMENT_STATUSES = [<span class="str">"Unpaid"</span>, <span class="str">"Paid"</span>];
-<span class="skip">⋮</span>
+<span class="skip">⋮ <span class="skip-range">(ข้าม 44–67)</span></span>
 <span class="cmt">// บรรทัด 68–71 — setter ที่ตรวจสอบสถานะงานซ่อม</span>
 <span class="line-num">68</span>     <span class="kw">set</span> status(val) {
 <span class="line-num">69</span>         <span class="kw">const</span> allowed = [<span class="str">"Pending"</span>, <span class="str">"In Progress"</span>, <span class="str">"Completed"</span>, <span class="str">"Ready for Pickup"</span>, <span class="str">"Cancelled"</span>];
@@ -449,8 +468,21 @@
 <span class="line-num">79</span>         <span class="kw">if</span> (!<span class="cls">RepairItem</span>.PAYMENT_STATUSES.includes(val)) <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">`Invalid payment status: </span>${val}<span class="str">`</span>);
 <span class="line-num">80</span>         <span class="prp">this</span>.<span class="prp">#paymentStatus</span> = val;
 <span class="line-num">81</span>     }
-<span class="skip">⋮</span>
-<span class="line-num">82</span> }</pre>
+<span class="skip">⋮ <span class="skip-range">(ข้าม 83–373)</span></span>
+<span class="cmt">// บรรทัด 374–410 — DataStore: สถานะ + การบันทึก ซ่อนหลัง API แบบ CRUD</span>
+<span class="line-num">374</span><span class="kw">class</span> <span class="cls">DataStore</span> {
+<span class="line-num">375</span>    <span class="prp">#repairs</span> = []; <span class="prp">#customers</span> = []; <span class="prp">#technicians</span> = []; <span class="prp">#invoices</span> = [];
+<span class="skip">⋮ <span class="skip-range">(ข้าม 380–383)</span></span>
+<span class="line-num">384</span>    <span class="prp">#load</span>() {
+<span class="line-num">386</span>        <span class="kw">const</span> raw = localStorage.getItem(<span class="str">"repairShopData"</span>);
+<span class="skip">⋮ <span class="skip-range">(ข้าม 387–392)</span></span>
+<span class="line-num">393</span>        <span class="kw">this</span>.<span class="prp">#repairs</span> = (d.repairs || []).map(r =&gt; <span class="cls">RepairFactory</span>.create(r));
+<span class="skip">⋮ <span class="skip-range">(ข้าม 394–400)</span></span>
+<span class="line-num">401</span>    <span class="prp">#save</span>() {
+<span class="skip">⋮ <span class="skip-range">(ข้าม 402–407)</span></span>
+<span class="line-num">408</span>        localStorage.setItem(<span class="str">"repairShopData"</span>, JSON.stringify(d));
+<span class="line-num">409</span>        <span class="kw">this</span>.<span class="prp">#notify</span>();
+<span class="line-num">410</span>    }</pre>
             </div>
         </div>
     </section>
@@ -473,7 +505,7 @@
                 <pre><span class="code-label">app.js</span><span class="cmt">// บรรทัด 37 — คลาสแม่</span>
 <span class="line-num">37</span> <span class="kw">class</span> <span class="cls">RepairItem</span> <span class="kw">extends</span> <span class="cls">BaseEntity</span> {
 <span class="line-num">38</span>     <span class="prp">#status</span>; <span class="prp">#priority</span>; <span class="prp">#createdAt</span>; <span class="prp">#paymentStatus</span>;
-<span class="skip">⋮</span>
+<span class="skip">⋮ <span class="skip-range">(ข้าม 39–57)</span></span>
 <span class="line-num">58</span>     calculateCost() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"Subclasses must implement calculateCost()."</span>); }
 <span class="cmt">// บรรทัด 107 — คลาสย่อยที่ใช้งานจริง (สืบทอด + เพิ่มฟิลด์เฉพาะ)</span>
 <span class="line-num">107</span><span class="kw">class</span> <span class="cls">ComputerRepair</span> <span class="kw">extends</span> <span class="cls">RepairItem</span> {
@@ -486,19 +518,30 @@
 <span class="line-num">122</span>        <span class="prp">this</span>.<span class="prp">#partsCost</span> = +data.partsCost || <span class="num">0</span>;
 <span class="line-num">123</span>        <span class="prp">this</span>.<span class="prp">#laborHours</span> = +data.laborHours || <span class="num">0</span>;
 <span class="line-num">124</span>    }
-<span class="skip">⋮</span>
+<span class="skip">⋮ <span class="skip-range">(ข้าม 125–130)</span></span>
 <span class="line-num">131</span>    <span class="kw">get</span> type() { <span class="kw">return</span> <span class="str">"Computer"</span>; }
 <span class="line-num">134</span>    calculateCost() {
 <span class="line-num">135</span>        <span class="kw">const</span> laborCost = <span class="prp">this</span>.<span class="prp">#laborHours</span> * <span class="num">40</span>;  <span class="cmt">// ฿40/ชม.</span>
 <span class="line-num">136</span>        <span class="kw">return</span> +(<span class="prp">this</span>.<span class="prp">#partsCost</span> + laborCost).toFixed(<span class="num">2</span>);
 <span class="line-num">137</span>    }
-<span class="skip">⋮</span>
+<span class="skip">⋮ <span class="skip-range">(ข้าม 138–139)</span></span>
 <span class="line-num">140</span>    getDeviceSpecs() {
 <span class="line-num">141</span>        <span class="kw">return</span> { deviceName: <span class="prp">this</span>.<span class="prp">#deviceName</span>, os: <span class="prp">this</span>.<span class="prp">#os</span>, issue: <span class="prp">this</span>.<span class="prp">#issue</span> };
 <span class="line-num">142</span>    }
-<span class="cmt">// บรรทัด 278 — ลำดับชั้นบุคคล (Customer สืบทอดจาก Person)</span>
+<span class="cmt">// บรรทัด 176 — คลาสย่อยอีกสาย: สืบทอด RepairItem เหมือนกัน</span>
+<span class="line-num">176</span><span class="kw">class</span> <span class="cls">SmartphoneRepair</span> <span class="kw">extends</span> <span class="cls">RepairItem</span> {
+<span class="line-num">177</span>    <span class="prp">#deviceName</span>; <span class="prp">#phoneOS</span>; <span class="prp">#issue</span>; <span class="prp">#partsCost</span>; <span class="prp">#laborHours</span>;
+<span class="skip">⋮ <span class="skip-range">(ข้าม 178–202)</span></span>
+<span class="cmt">// บรรทัด 250 — ลำดับชั้นบุคคล: Person เป็นคลาสแม่</span>
+<span class="line-num">250</span><span class="kw">class</span> <span class="cls">Person</span> <span class="kw">extends</span> <span class="cls">BaseEntity</span> { <span class="cmt">// แม่: ชื่อ + ติดต่อ</span>
+<span class="line-num">251</span>    <span class="prp">#name</span>; <span class="prp">#email</span>; <span class="prp">#phone</span>; <span class="prp">#address</span>;
+<span class="skip">⋮ <span class="skip-range">(ข้าม 252–277)</span></span>
+<span class="cmt">// บรรทัด 278/294 — ลูกครึ่งปลาย: เพิ่มฟิลด์เฉพาะของตัวเอง</span>
 <span class="line-num">278</span><span class="kw">class</span> <span class="cls">Customer</span> <span class="kw">extends</span> <span class="cls">Person</span> {
-<span class="line-num">279</span>    <span class="prp">#loyaltyTier</span>;  <span class="cmt">// เพิ่มของตัวเอง: ระดับสมาชิก</span></pre>
+<span class="line-num">279</span>    <span class="prp">#loyaltyTier</span>;  <span class="cmt">// เพิ่มของตัวเอง: ระดับสมาชิก</span>
+<span class="skip">⋮ <span class="skip-range">(ข้าม 280–293)</span></span>
+<span class="line-num">294</span><span class="kw">class</span> <span class="cls">Technician</span> <span class="kw">extends</span> <span class="cls">Person</span> {
+<span class="line-num">295</span>    <span class="prp">#skills</span>; <span class="prp">#hourlyRate</span>; <span class="prp">#rating</span>; <span class="cmt">// เพิ่มของตัวเอง: ทักษะ/ค่าแรง/คะแนน</span></pre>
             </div>
         </div>
     </section>
@@ -538,6 +581,10 @@
 <span class="line-num">567</span>        }
 <span class="line-num">568</span>    }
 <span class="line-num">569</span>};</pre>
+<div class="code-note">จุดเรียกใช้จริงจากฝั่ง UI — <strong>renderer บรรทัด 1053, 1088:</strong></div>
+<pre><span class="code-label">app.js</span><span class="cmt">// บรรทัด 1053 / 1088 — ตารางและแดชบอร์ดเรียกเมธอดเดียวกัน</span>
+<span class="line-num">1053</span>    &lt;td&gt;฿${r.calculateCost().toFixed(2)}&lt;/td&gt; <span class="cmt">// ไม่สนชนิดอุปกรณ์</span>
+<span class="line-num">1088</span>    totalRevenue += r.calculateCost();        <span class="cmt">// รวมรายได้ทุกงาน</span></pre>
             </div>
         </div>
     </section>
@@ -597,14 +644,14 @@ repair2.calculateCost()  <span class="cmt">// → 35 + 1×฿30 =  ฿65.00 📱
 <span class="line-num">377</span>    <span class="prp">#technicians</span> = [];
 <span class="line-num">378</span>    <span class="prp">#invoices</span> = [];
 <span class="line-num">379</span>    <span class="prp">#listeners</span> = [];
-<span class="skip">⋮</span>
+<span class="skip">⋮ <span class="skip-range">(ข้าม 380–383)</span></span>
 <span class="line-num">384</span>    <span class="prp">#load</span>() {
 <span class="line-num">386</span>        <span class="kw">const</span> raw = localStorage.getItem(<span class="str">"repairShopData"</span>);
-<span class="skip">⋮</span>
+<span class="skip">⋮ <span class="skip-range">(ข้าม 387–392)</span></span>
 <span class="line-num">393</span>        <span class="kw">this</span>.<span class="prp">#repairs</span> = (d.repairs || []).map(r =&gt; <span class="cls">RepairFactory</span>.create(r));
-<span class="skip">⋮</span>
+<span class="skip">⋮ <span class="skip-range">(ข้าม 394–400)</span></span>
 <span class="line-num">401</span>    <span class="prp">#save</span>() {
-<span class="skip">⋮</span>
+<span class="skip">⋮ <span class="skip-range">(ข้าม 402–407)</span></span>
 <span class="line-num">408</span>        localStorage.setItem(<span class="str">"repairShopData"</span>, JSON.stringify(d));
 <span class="line-num">409</span>        <span class="kw">this</span>.<span class="prp">#notify</span>();
 <span class="line-num">410</span>    }
@@ -615,7 +662,22 @@ repair2.calculateCost()  <span class="cmt">// → 35 + 1×฿30 =  ฿65.00 📱
 <span class="line-num">422</span>        <span class="kw">this</span>.<span class="prp">#reconcileInvoices</span>();
 <span class="line-num">423</span>        <span class="kw">this</span>.<span class="prp">#save</span>();
 <span class="line-num">424</span>        <span class="kw">return</span> repair;
-<span class="line-num">425</span>    }</pre>
+<span class="line-num">425</span>    }
+<span class="skip">⋮ <span class="skip-range">(ข้าม 426–446: updateRepair, deleteRepair, getStats…)</span></span>
+<span class="cmt">// บรรทัด 447 — ซิงก์สถานะการชำระเงิน: งานซ่อม ↔ ใบแจ้งหนี้</span>
+<span class="line-num">447</span>    setPaymentStatus(id, status) {
+<span class="line-num">448</span>        <span class="kw">const</span> rep = <span class="kw">this</span>.<span class="prp">#repairs</span>.find(r =&gt; r.id === id); <span class="cmt">// setter มี validation</span>
+<span class="line-num">449</span>        rep.paymentStatus = status;
+<span class="line-num">450</span>        <span class="kw">const</span> inv = <span class="kw">this</span>.<span class="prp">#invoices</span>.find(i =&gt; i.repairId === id);
+<span class="line-num">451</span>        <span class="kw">if</span> (inv) inv.status = status; <span class="cmt">// บิลตามงานซ่อมทันที</span>
+<span class="line-num">452</span>        <span class="kw">this</span>.<span class="prp">#save</span>();
+<span class="line-num">453</span>    }
+<span class="skip">⋮ <span class="skip-range">(ข้าม 454–514)</span></span>
+<span class="cmt">// บรรทัด 515 — ตรวจใบแจ้งหนี้ทุกใบให้ตรงกับงานซ่อมจริง</span>
+<span class="line-num">515</span>    <span class="prp">#reconcileInvoices</span>() {
+<span class="line-num">516</span>        <span class="kw">this</span>.<span class="prp">#invoices</span> = <span class="kw">this</span>.<span class="prp">#invoices</span>.filter(i =&gt;
+<span class="line-num">517</span>            <span class="kw">this</span>.<span class="prp">#repairs</span>.some(r =&gt; r.id === i.repairId &amp;&amp; r.status !== <span class="str">"Cancelled"</span>));
+<span class="line-num">518</span>    }</pre>
             </div>
         </div>
     </section>
