@@ -268,14 +268,15 @@
         <div class="slide-content">
             <div class="kicker">การเขียนโปรแกรมเชิงวัตถุ (OOP) · โครงงานย่อย</div>
             <h1>🔧 RepairShop Pro</h1>
-            <h2 style="font-size:1.9rem; color:var(--accent); margin-bottom:10px;">ระบบบริหารจัดการร้านซ่อมคอมพิวเตอร์<br>และสมาร์ทโฟน</h2>
+            <h2 style="font-size:1.9rem; color:var(--accent); margin-bottom:10px;">ระบบบริหารจัดการร้านซ่อมคอมพิวเตอร์<br>และสมาร์ทโฟน — เวอร์ชัน 2.0</h2>
             <div class="divider"></div>
             <p class="subtitle">แอปพลิเคชัน GUI ที่ใช้งานได้จริง สร้างด้วย <strong>HTML, CSS และ JavaScript</strong> แสดงหลักการ OOP ครบทั้ง 4 ประการในโปรเจกต์เดียว ได้แก่ <strong>Abstraction</strong> (นามธรรม) · <strong>Encapsulation</strong> (การห่อหุ้ม) · <strong>Inheritance</strong> (การสืบทอด) · <strong>Polymorphism</strong> (พหุสัณฐาน)</p>
             <div class="title-meta">
-                <span>📄 โค้ดหลัก: <strong style="color:var(--accent)">app.js</strong> (1,075 บรรทัด)</span>
+                <span>📄 โค้ดหลัก: <strong style="color:var(--accent)">app.js</strong> (1,253 บรรทัด)</span>
                 <span>🗄️ บันทึกข้อมูลด้วย localStorage</span>
-                <span>🏷️ 11 คลาส</span>
+                <span>🏷️ 9 คลาส + 1 Factory</span>
                 <span>⚡ ไม่พึ่งพาไลบรารีภายนอก</span>
+                <span>💰 ใบแจ้งหนี้ + สถานะชำระเงินอัตโนมัติ</span>
             </div>
         </div>
     </section>
@@ -287,7 +288,7 @@
             <h2>ปัญหาจากโลกความจริง</h2>
             <div class="grid-2">
                 <div>
-                    <p class="subtitle" style="margin-bottom:20px;">ร้านซ่อมต้องจัดการงานซ่อมหลายประเภทพร้อมกัน — โน้ตบุ๊ก, เดสก์ท็อป, iPhone, มือถือ Android — ซึ่งแต่ละประเภทมีราคา รายละเอียด และขั้นตอนการทำงานต่างกัน การจดในสมุดหรือสเปรดชีตทำให้เกิดปัญหา:</p>
+                    <p class="subtitle" style="margin-bottom:20px;">ร้านซ่อมต้องจัดการงานซ่อมหลายประเภทพร้อมกัน — คอมพิวเตอร์ (Windows, macOS) และสมาร์ตโฟน (iOS, Android, HarmonyOS) — ซึ่งแต่ละประเภทมีราคา รายละเอียด และขั้นตอนการทำงานต่างกัน การจดในสมุดหรือสเปรดชีตทำให้เกิดปัญหา:</p>
                     <ul class="check-list" style="margin-top:10px;">
                         <li>งานซ่อมหายและลืมติดตามผล</li>
                         <li>คิดราคาไม่เป็นมาตรฐาน (อุปกรณ์แต่ละชนิดคิดต่างกัน)</li>
@@ -299,7 +300,7 @@
                     <p class="subtitle" style="margin-bottom:20px;"><strong class="highlight">แนวทางของเรา:</strong> ออกแบบโมเดล OOP โดยให้อุปกรณ์แต่ละชนิดเป็น <em>ประเภท (type)</em> ที่แตกต่างกันของแนวคิดเดียวกัน — นั่นคือคลาส <code style="color:var(--warning)">RepairItem</code> พฤติกรรมร่วมอยู่ที่คลาสแม่ แต่ละชนิดของอุปกรณ์ให้รายละเอียดของตัวเอง</p>
                     <div style="background:rgba(56,189,248,.08); border:1px solid rgba(56,189,248,.25); border-radius:12px; padding:18px; font-size:.85rem; line-height:1.8;">
                         <strong style="color:var(--accent);">ทำไม OOP ถึงเหมาะกับปัญหานี้:</strong><br>
-                        งานซ่อมเป็น <em>วัตถุ (object)</em> ตามธรรมชาติ (มีสถานะ + พฤติกรรม) อุปกรณ์ต่างชนิดมีโครงสร้างร่วมกัน (Inheritance) แต่มีราคาต่างกัน (Polymorphism) OOP ทำให้ระบบขยายง่าย — การเพิ่ม <em>การซ่อมแท็บเล็ต</em> ในอนาคต = แค่เพิ่มคลาสย่อยอีก 1 คลาส
+                        งานซ่อมเป็น <em>วัตถุ (object)</em> ตามธรรมชาติ (มีสถานะ + พฤติกรรม) อุปกรณ์ต่างชนิดมีโครงสร้างร่วมกัน (Inheritance) แต่มีราคาต่างกัน (Polymorphism) ระบบติดตามงานผ่าน 5 สถานะ — รอดำเนินการ → กำลังซ่อม → ซ่อมเสร็จแล้ว / รอรับเครื่อง (หรือยกเลิก) การเพิ่ม <em>การซ่อมแท็บเล็ต</em> ในอนาคต = แค่เพิ่มคลาสย่อยอีก 1 คลาส
                     </div>
                 </div>
             </div>
@@ -312,14 +313,14 @@
             <div class="kicker">การสาธิต · ทัวร์ระบบ</div>
             <h2>คุณสมบัติ — ระบบทำอะไรได้บ้าง</h2>
             <div class="grid-3">
-                <div class="card"><div class="emoji">📊</div><h3>แดชบอร์ด</h3><p>สถิติสด — จำนวนงานซ่อมทั้งหมด, งานที่กำลังทำ, งานที่เสร็จแล้ว, รายได้รวม พร้อมกราฟแยกตามประเภทอุปกรณ์และสถานะ รวมถึงฟีดกิจกรรมล่าสุด</p></div>
-                <div class="card"><div class="emoji">🔩</div><h3>จัดการงานซ่อม</h3><p>สร้าง แก้ไข ลบ และดูรายละเอียดงานซ่อม ฟอร์มเฉพาะตามประเภท: คอมพิวเตอร์บันทึก OS ส่วนมือถือบันทึก iOS/Android พร้อมลำดับสถานะและระดับความเร่งด่วน</p></div>
-                <div class="card"><div class="emoji">👥</div><h3>ลูกค้า</h3><p>ฐานข้อมูลลูกค้า พร้อมรายละเอียดติดต่อ จำนวนงานซ่อมต่อลูกค้า และยอดใช้จ่ายสะสม</p></div>
-                <div class="card"><div class="emoji">🧑‍🔧</div><h3>ช่างเทคนิค</h3><p>โปรไฟล์ช่างพร้อมความชำนาญ ทักษะ อัตราค่าชั่วโมง และภาระงานสด (งานที่กำลังทำ กับงานที่เสร็จแล้ว)</p></div>
-                <div class="card"><div class="emoji">💰</div><h3>บิลและใบแจ้งหนี้</h3><p>ใบแจ้งหนี้สร้างอัตโนมัติจากงานซ่อมที่เสร็จ — ค่าอะไหล่ + ค่าแรง + ภาษี — พร้อมติดตามยอดชำระแล้ว/ค้างชำระ</p></div>
-                <div class="card"><div class="emoji">🔍</div><h3>ค้นหาและกรอง</h3><p>ค้นหาทั่วระบบจากชื่ออุปกรณ์ ปัญหา หรือชื่อลูกค้า พร้อมตัวกรองสถานะและประเภทอุปกรณ์ในตารางงานซ่อม</p></div>
+                <div class="card"><div class="emoji">📊</div><h3>แดชบอร์ด</h3><p>สถิติสด — งานซ่อมทั้งหมด, งานที่กำลังทำ, งานที่เสร็จแล้ว, รายได้รวม พร้อมกราฟแยกตามประเภทอุปกรณ์และสถานะ, กล่องสรุปจำนวน และฟีดกิจกรรมล่าสุด</p></div>
+                <div class="card"><div class="emoji">🔩</div><h3>จัดการงานซ่อม</h3><p>สร้าง แก้ไข ลบ และดูรายละเอียด ฟอร์มเฉพาะตามประเภท: คอมพิวเตอร์บันทึก OS ส่วนมือถือเลือก iOS / Android / HarmonyOS พร้อมสถานะ 5 ระดับ ความเร่งด่วน 3 ระดับ และปุ่มสลับสถานะการชำระเงิน 💵</p></div>
+                <div class="card"><div class="emoji">👥</div><h3>ลูกค้า</h3><p>ฐานข้อมูลลูกค้า (ชื่อ อีเมล โทรศัพท์ ที่อยู่) พร้อมจำนวนงานซ่อมต่อลูกค้า และยอดใช้จ่ายสะสมที่คำนวณสดจาก <code>calculateCost()</code> ของทุกงาน</p></div>
+                <div class="card"><div class="emoji">🧑‍🔧</div><h3>ช่างซ่อม</h3><p>โปรไฟล์ช่างพร้อมความเชี่ยวชาญ 5 หมวด ทักษะ คะแนน และเรทค่าแรงต่อชั่วโมง พร้อมภาระงานสด (งานที่กำลังทำ กับงานที่เสร็จแล้ว)</p></div>
+                <div class="card"><div class="emoji">💰</div><h3>การเงิน</h3><p>ใบแจ้งหนี้สร้างอัตโนมัติเมื่องานซ่อมเสร็จหรือรอรับเครื่อง — ค่าอะไหล่ + ค่าแรง + ภาษี 8% — และซิงก์สถานะ "ชำระเงินแล้ว/ยังไม่ชำระ" กับงานซ่อมทันที</p></div>
+                <div class="card"><div class="emoji">🔍</div><h3>ค้นหาและกรอง</h3><p>ค้นหาทั่วระบบจากช่องค้นหาด้านบน (ชื่ออุปกรณ์ ปัญหา หรือชื่อลูกค้า) พร้อมตัวกรองสถานะและประเภทอุปกรณ์ในตารางงานซ่อม</p></div>
             </div>
-            <p style="font-size:.78rem; color:var(--muted); margin-top:18px;">ข้อมูลทั้งหมดบันทึกใน <strong>localStorage</strong> — ปิดเบราว์เซอร์แล้วเปิดใหม่ ข้อมูลร้านยังอยู่ครบ มีข้อมูลตัวอย่าง (demo data) เตรียมไว้ให้ เปิดใช้งานได้ทันที</p>
+            <p style="font-size:.78rem; color:var(--muted); margin-top:18px;">ข้อมูลทั้งหมดบันทึกใน <strong>localStorage</strong> — ปิดเบราว์เซอร์แล้วเปิดใหม่ ข้อมูลร้านยังอยู่ครบ มีข้อมูลตัวอย่างเตรียมไว้ (3 ลูกค้า · 3 ช่างซ่อม · 6 งานซ่อม เช่น Dell XPS 15, iPhone 15 Pro, Samsung Galaxy S24) เปิดใช้งานได้ทันที</p>
         </div>
     </section>
 
@@ -332,28 +333,28 @@
                 <div class="hierarchy">
                     <div class="h-node abstract"><div class="name">BaseEntity</div><div class="sub">บรรทัด 13 · นามธรรม · ID อัตโนมัติ</div></div>
                     <div class="h-connector"></div>
-                    <div class="h-node abstract"><div class="name">RepairItem</div><div class="sub">บรรทัด 37 · นามธรรม · สถานะ, ความเร่งด่วน</div></div>
+                    <div class="h-node abstract"><div class="name">RepairItem</div><div class="sub">บรรทัด 37 · นามธรรม · สถานะ ความเร่งด่วน การชำระเงิน</div></div>
                     <div class="h-connector"></div>
                     <div class="h-branch">
                         <div style="display:flex; flex-direction:column; align-items:center; gap:10px;">
                             <div class="h-connector"></div>
-                            <div class="h-node"><div class="name">ComputerRepair</div><div class="sub">บรรทัด 94 · 💻 $40/ชม.</div></div>
+                            <div class="h-node"><div class="name">ComputerRepair</div><div class="sub">บรรทัด 107 · 💻 ฿40/ชม.</div></div>
                         </div>
                         <div style="display:flex; flex-direction:column; align-items:center; gap:10px;">
                             <div class="h-connector"></div>
-                            <div class="h-node"><div class="name">SmartphoneRepair</div><div class="sub">บรรทัด 163 · 📱 $30/ชม.</div></div>
+                            <div class="h-node"><div class="name">SmartphoneRepair</div><div class="sub">บรรทัด 176 · 📱 ฿30/ชม.</div></div>
                         </div>
                     </div>
                     <div class="h-connector"></div>
-                    <div class="h-node"><div class="name">Invoice</div><div class="sub">บรรทัด 318</div></div>
+                    <div class="h-node"><div class="name">Invoice</div><div class="sub">บรรทัด 331 · ใบแจ้งหนี้ · ภาษี 8%</div></div>
                 </div>
                 <div>
                     <p class="subtitle" style="margin-bottom:18px;">สองลำดับชั้นแบบขนาน ภายใต้การออกแบบเดียวกัน:</p>
                     <ul class="pill-list">
-                        <li><span class="tag">ผู้คน</span><span><code style="color:var(--success)">Person</code> (บรรทัด 237) → <code style="color:var(--success)">Customer</code> (265) และ <code style="color:var(--success)">Technician</code> (281)</span><span class="ln">การสืบทอด</span></li>
+                        <li><span class="tag">ผู้คน</span><span><code style="color:var(--success)">Person</code> (บรรทัด 250) → <code style="color:var(--success)">Customer</code> (278) และ <code style="color:var(--success)">Technician</code> (294)</span><span class="ln">การสืบทอด</span></li>
                         <li><span class="tag">งานซ่อม</span><span><code style="color:var(--success)">RepairItem</code> → <code style="color:var(--success)">ComputerRepair</code> และ <code style="color:var(--success)">SmartphoneRepair</code></span><span class="ln">การสืบทอด</span></li>
-                        <li><span class="tag">การเก็บข้อมูล</span><span><code style="color:var(--success)">DataStore</code> — CRUD + localStorage (บรรทัด 361)</span><span class="ln">การห่อหุ้ม</span></li>
-                        <li><span class="tag">การสร้างวัตถุ</span><span><code style="color:var(--success)">RepairFactory</code> — สร้างคลาสย่อยที่ถูกต้อง (บรรทัด 504)</span><span class="ln">พหุสัณฐาน</span></li>
+                        <li><span class="tag">การเก็บข้อมูล</span><span><code style="color:var(--success)">DataStore</code> — CRUD + localStorage (บรรทัด 374)</span><span class="ln">การห่อหุ้ม</span></li>
+                        <li><span class="tag">การสร้างวัตถุ</span><span><code style="color:var(--success)">RepairFactory</code> — สร้างคลาสย่อยที่ถูกต้อง (บรรทัด 561)</span><span class="ln">พหุสัณฐาน</span></li>
                     </ul>
                     <div style="background:rgba(255,255,255,.05); border:1px dashed rgba(255,255,255,.2); border-radius:10px; padding:14px; font-size:.8rem; color:var(--muted); margin-top:14px;">
                         💡 กล่องเส้นประคือคลาส <em>นามธรรม</em> — กำหนดกติกา ส่วนคลาสลูกที่ใช้งานจริงเป็นผู้ลงมือทำงาน
@@ -372,12 +373,12 @@
                 <div>
                     <p class="subtitle" style="margin-bottom:16px;"><strong class="highlight">แนวคิด:</strong> ซ่อนความซับซ้อนไว้เบื้องหลังอินเทอร์เฟซง่าย ๆ คลาส <code style="color:var(--warning)">BaseEntity</code> (บรรทัด 13) และ <code style="color:var(--warning)">RepairItem</code> (บรรทัด 37) เป็นคลาส <em>นามธรรม</em> — สร้างโดยตรงไม่ได้ ต้องสร้างผ่านคลาสย่อยเท่านั้น คลาสเหล่านี้ประกาศว่างานซ่อมทุกชิ้น <em>ต้องทำอะไร</em> ไม่ใช่ <em>ทำอย่างไร</em></p>
                     <ul class="pill-list">
-                        <li><span class="tag">การป้องกัน</span><span><code>new.target</code> บล็อกการสร้างคลาสโดยตรง</span><span class="ln">บรรทัด 17</span></li>
-                        <li><span class="tag">ข้อตกลง</span><span>งานซ่อมทุกชิ้นต้องมี <code>calculateCost()</code>, <code>getDeviceSpecs()</code>, <code>type</code>, <code>displayInfo</code></span><span class="ln">บรรทัด 50, 53, 56</span></li>
-                        <li><span class="tag">ผลลัพธ์</span><span>ส่วน UI ไม่ต้องสนใจประเภทอุปกรณ์ — แค่เรียกอินเทอร์เฟซ</span><span class="ln">ใช้ใน renderer</span></li>
+                        <li><span class="tag">การป้องกัน</span><span><code>new.target</code> บล็อกการสร้างคลาสนามธรรมโดยตรง</span><span class="ln">บรรทัด 17</span></li>
+                        <li><span class="tag">ข้อตกลง</span><span>งานซ่อมทุกชิ้นต้องมี <code>type</code>, <code>calculateCost()</code>, <code>getDeviceSpecs()</code>, <code>displayInfo</code></span><span class="ln">บรรทัด 55, 58, 61, 64</span></li>
+                        <li><span class="tag">ผลลัพธ์</span><span>ส่วน UI เรียกผ่านอินเทอร์เฟซเดียวกัน — ไม่สนใจประเภทอุปกรณ์</span><span class="ln">renderer บรรทัด 1021+</span></li>
                     </ul>
                 </div>
-                <pre><span class="code-label">app.js</span><span class="cmt">// บรรทัด 13–31 — BaseEntity นามธรรม</span>
+                <pre><span class="code-label">app.js</span><span class="cmt">// บรรทัด 13–30 — BaseEntity นามธรรม</span>
 <span class="line-num">13</span><span class="kw">class</span> <span class="cls">BaseEntity</span> {
 <span class="line-num">14</span>    <span class="prp">#id</span>; <span class="cmt">// Private field (ENCAPSULATION)</span>
 <span class="line-num">16</span>    <span class="kw">constructor</span>(id = <span class="num">null</span>) {
@@ -387,13 +388,13 @@
 <span class="line-num">20</span>        <span class="prp">this</span>.<span class="prp">#id</span> = id || <span class="cls">BaseEntity</span>._nextId++;
 <span class="line-num">21</span>    }
 <span class="line-num">27</span>    <span class="cmt">// ABSTRACT methods — must be overridden</span>
-<span class="line-num">28</span>    <span class="kw">get</span> displayInfo() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"..."</span>); }
-<span class="line-num">29</span>    <span class="kw">get</span> type() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"..."</span>); }
-<span class="line-num">30</span>    toJSON() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"..."</span>); }
+<span class="line-num">28</span>    <span class="kw">get</span> displayInfo() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"Abstract getter must be implemented."</span>); }
+<span class="line-num">29</span>    <span class="kw">get</span> type() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"Abstract getter must be implemented."</span>); }
+<span class="line-num">30</span>    toJSON() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"Abstract method must be implemented."</span>); }
 <span class="cmt">// RepairItem (บรรทัด 37) ประกาศข้อตกลงของงานซ่อมทุกชิ้น:</span>
-<span class="line-num">50</span>    <span class="kw">get</span> type() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"Subclasses must declare device type."</span>); }
-<span class="line-num">53</span>    calculateCost() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"Subclasses must implement..."</span>); }
-<span class="line-num">56</span>    getDeviceSpecs() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"Subclasses must implement..."</span>); }</pre>
+<span class="line-num">55</span>    <span class="kw">get</span> type() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"Subclasses must declare device type."</span>); }
+<span class="line-num">58</span>    calculateCost() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"Subclasses must implement calculateCost()."</span>); }
+<span class="line-num">61</span>    getDeviceSpecs() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"Subclasses must implement getDeviceSpecs()."</span>); }</pre>
             </div>
         </div>
     </section>
@@ -407,25 +408,28 @@
                 <div>
                     <p class="subtitle" style="margin-bottom:16px;"><strong class="highlight">แนวคิด:</strong> เก็บข้อมูลเป็นส่วนตัว เปิดเผยผ่านตัวเข้าถึง (getter/setter) ที่มีการ <em>ตรวจสอบความถูกต้อง</em> ทุกคลาสซ่อนฟิลด์ด้วยเครื่องหมาย <code style="color:var(--warning)">#private</code> — ข้อมูลที่ไม่ถูกต้องจะเข้าสู่ระบบไม่ได้</p>
                     <ul class="pill-list">
-                        <li><span class="tag">ฟิลด์ส่วนตัว</span><span><code>#id</code>, <code>#status</code>, <code>#priority</code>, <code>#partsCost</code>, <code>#laborHours</code>…</span><span class="ln">บรรทัด 14, 38–40</span></li>
-                        <li><span class="tag">การตรวจสอบ</span><span>setter ของสถานะปฏิเสธค่าที่ไม่อยู่ในรายการที่อนุญาต</span><span class="ln">บรรทัด 63–65</span></li>
-                        <li><span class="tag">DataStore</span><span>สถานะ + การบันทึก ซ่อนอยู่หลัง API แบบ CRUD</span><span class="ln">บรรทัด 361</span></li>
+                        <li><span class="tag">ฟิลด์ส่วนตัว</span><span><code>#id</code>, <code>#status</code>, <code>#priority</code>, <code>#paymentStatus</code>, <code>#partsCost</code>…</span><span class="ln">บรรทัด 14, 38–41</span></li>
+                        <li><span class="tag">การตรวจสอบ</span><span><code>set status</code> ปฏิเสธค่านอกลิสต์ 5 สถานะ · <code>set paymentStatus</code> ตรวจ Unpaid/Paid</span><span class="ln">บรรทัด 68–71, 78–80</span></li>
+                        <li><span class="tag">DataStore</span><span>สถานะ + การบันทึก ซ่อนอยู่หลัง API แบบ CRUD</span><span class="ln">บรรทัด 374–409</span></li>
                         <li><span class="tag">ผลลัพธ์</span><span>พิมพ์ผิดเช่น "In Progresss" จะ error แทนที่จะทำให้ข้อมูลเสีย</span><span class="ln">—</span></li>
                     </ul>
                 </div>
-                <pre><span class="code-label">app.js</span><span class="cmt">// บรรทัด 37–67 — สถานะที่ถูกห่อหุ้มของ RepairItem</span>
+                <pre><span class="code-label">app.js</span><span class="cmt">// บรรทัด 37–43 — สถานะที่ถูกห่อหุ้มของ RepairItem</span>
 <span class="line-num">37</span> <span class="kw">class</span> <span class="cls">RepairItem</span> <span class="kw">extends</span> <span class="cls">BaseEntity</span> {
-<span class="line-num">38</span>     <span class="prp">#status</span>;       <span class="cmt">// ENCAPSULATION: private field</span>
+<span class="line-num">38</span>     <span class="prp">#status</span>;        <span class="cmt">// ENCAPSULATION: private field</span>
 <span class="line-num">39</span>     <span class="prp">#priority</span>;
 <span class="line-num">40</span>     <span class="prp">#createdAt</span>;
+<span class="line-num">41</span>     <span class="prp">#paymentStatus</span>; <span class="cmt">// "Unpaid" | "Paid"</span>
+<span class="line-num">43</span>     <span class="kw">static</span> PAYMENT_STATUSES = [<span class="str">"Unpaid"</span>, <span class="str">"Paid"</span>];
 
-<span class="line-num">61</span>     <span class="cmt">// เข้าถึงแบบควบคุม: getters &amp; setters</span>
-<span class="line-num">62</span>     <span class="kw">get</span> status() { <span class="kw">return</span> <span class="prp">this</span>.<span class="prp">#status</span>; }
-<span class="line-num">63</span>     <span class="kw">set</span> status(val) {
-<span class="line-num">64</span>         <span class="kw">const</span> allowed = [<span class="str">"Pending"</span>, <span class="str">"In Progress"</span>, <span class="str">"Completed"</span>, <span class="str">"Ready for Pickup"</span>, <span class="str">"Cancelled"</span>];
-<span class="line-num">65</span>         <span class="kw">if</span> (!allowed.includes(val)) <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">`Invalid status: </span>${val}<span class="str">`</span>);
-<span class="line-num">66</span>         <span class="prp">this</span>.<span class="prp">#status</span> = val;
-<span class="line-num">67</span>     }</pre>
+<span class="line-num">68</span>     <span class="kw">set</span> status(val) {
+<span class="line-num">69</span>         <span class="kw">const</span> allowed = [<span class="str">"Pending"</span>, <span class="str">"In Progress"</span>, <span class="str">"Completed"</span>, <span class="str">"Ready for Pickup"</span>, <span class="str">"Cancelled"</span>];
+<span class="line-num">70</span>         <span class="kw">if</span> (!allowed.includes(val)) <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">`Invalid status: </span>${val}<span class="str">`</span>);
+<span class="line-num">71</span>         <span class="prp">this</span>.<span class="prp">#status</span> = val;
+<span class="cmt">// บรรทัด 78–80 — setter ที่ตรวจสอบสถานะการชำระเงิน</span>
+<span class="line-num">78</span>     <span class="kw">set</span> paymentStatus(val) {
+<span class="line-num">79</span>         <span class="kw">if</span> (!<span class="cls">RepairItem</span>.PAYMENT_STATUSES.includes(val)) <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">`Invalid payment status: </span>${val}<span class="str">`</span>);
+<span class="line-num">80</span>         <span class="prp">this</span>.<span class="prp">#paymentStatus</span> = val;</pre>
             </div>
         </div>
     </section>
@@ -437,29 +441,29 @@
             <h2>Inheritance (การสืบทอด) — ใช้ซ้ำและขยายเฉพาะ</h2>
             <div class="two-col">
                 <div>
-                    <p class="subtitle" style="margin-bottom:16px;"><strong class="highlight">แนวคิด:</strong> คลาสย่อยสืบทอดทุกอย่างจากคลาสแม่ — การสร้าง ID, การจัดการสถานะ/ความเร่งด่วน, การแปลง JSON — แล้วเพิ่มฟิลด์เฉพาะของตัวเอง <code style="color:var(--warning)">ComputerRepair</code> สืบทอดจาก <code style="color:var(--warning)">RepairItem</code> ส่วน <code style="color:var(--warning)">Customer</code> สืบทอดจาก <code style="color:var(--warning)">Person</code></p>
+                    <p class="subtitle" style="margin-bottom:16px;"><strong class="highlight">แนวคิด:</strong> คลาสย่อยสืบทอดทุกอย่างจากคลาสแม่ — การสร้าง ID, การจัดการสถานะ/ความเร่งด่วน/การชำระเงิน, การแปลง JSON — แล้วเพิ่มฟิลด์เฉพาะของตัวเอง <code style="color:var(--warning)">ComputerRepair</code> สืบทอดจาก <code style="color:var(--warning)">RepairItem</code> ส่วน <code style="color:var(--warning)">Customer</code> สืบทอดจาก <code style="color:var(--warning)">Person</code></p>
                     <ul class="pill-list">
                         <li><span class="tag">RepairItem</span><span>คลาสแม่ของงานซ่อมทั้งหมด — สถานะ, ความเร่งด่วน, ข้อตกลงราคา</span><span class="ln">บรรทัด 37</span></li>
-                        <li><span class="tag">ComputerRepair</span><span>เพิ่ม <code>#os</code>, <code>#deviceName</code>, <code>#partsCost</code>…</span><span class="ln">บรรทัด 94</span></li>
-                        <li><span class="tag">SmartphoneRepair</span><span>เพิ่ม <code>#phoneOS</code>… แทนที่ type และราคา</span><span class="ln">บรรทัด 163</span></li>
-                        <li><span class="tag">Person → ลูกค้า/ช่าง</span><span>ลำดับชั้นบุคคล ใช้ชื่อ/อีเมล/โทรศัพท์ร่วมกัน</span><span class="ln">บรรทัด 237–281</span></li>
+                        <li><span class="tag">ComputerRepair</span><span>เพิ่ม <code>#os</code>, <code>#deviceName</code>, <code>#partsCost</code>…</span><span class="ln">บรรทัด 107</span></li>
+                        <li><span class="tag">SmartphoneRepair</span><span>เพิ่ม <code>#phoneOS</code>… แทนที่ type และราคา</span><span class="ln">บรรทัด 176</span></li>
+                        <li><span class="tag">Person → ลูกค้า/ช่าง</span><span>ลำดับชั้นบุคคล — Customer เพิ่ม <code>loyaltyTier</code>, Technician เพิ่ม <code>hourlyRate</code>/<code>skills</code>/<code>rating</code></span><span class="ln">บรรทัด 250–294</span></li>
                     </ul>
                 </div>
                 <pre><span class="code-label">app.js</span><span class="cmt">// บรรทัด 37 — คลาสแม่</span>
 <span class="line-num">37</span> <span class="kw">class</span> <span class="cls">RepairItem</span> <span class="kw">extends</span> <span class="cls">BaseEntity</span> {
-<span class="line-num">38</span>     <span class="prp">#status</span>; <span class="prp">#priority</span>; <span class="prp">#createdAt</span>;
-<span class="line-num">53</span>     calculateCost() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"..."</span>); }
-<span class="line-num">56</span>     getDeviceSpecs() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"..."</span>); }
-<span class="cmt">// บรรทัด 94 — คลาสย่อยที่ใช้งานจริง</span>
-<span class="line-num">94</span> <span class="kw">class</span> <span class="cls">ComputerRepair</span> <span class="kw">extends</span> <span class="cls">RepairItem</span> {
-<span class="line-num">95</span>     <span class="prp">#deviceName</span>; <span class="prp">#os</span>; <span class="prp">#issue</span>;
-<span class="line-num">104</span>    <span class="kw">constructor</span>(data = {}) {
-<span class="line-num">105</span>        <span class="kw">super</span>(data.id, data.status, data.priority);
-<span class="line-num">118</span>    <span class="kw">get</span> type() { <span class="kw">return</span> <span class="str">"Computer"</span>; }
-<span class="line-num">121</span>    calculateCost() { <span class="cmt">/* $40/ชม. — ดูสไลด์ถัดไป */</span> }
-<span class="line-num">127</span>    getDeviceSpecs() { <span class="cmt">/* คืนรายละเอียดคอมพิวเตอร์ */</span> }
-<span class="cmt">// บรรทัด 265 — ลำดับชั้นบุคคล</span>
-<span class="line-num">265</span> <span class="kw">class</span> <span class="cls">Customer</span> <span class="kw">extends</span> <span class="cls">Person</span> { ... }</pre>
+<span class="line-num">38</span>     <span class="prp">#status</span>; <span class="prp">#priority</span>; <span class="prp">#createdAt</span>; <span class="prp">#paymentStatus</span>;
+<span class="line-num">58</span>     calculateCost() { <span class="kw">throw new</span> <span class="cls">Error</span>(<span class="str">"..."</span>); }
+<span class="cmt">// บรรทัด 107 — คลาสย่อยที่ใช้งานจริง</span>
+<span class="line-num">107</span><span class="kw">class</span> <span class="cls">ComputerRepair</span> <span class="kw">extends</span> <span class="cls">RepairItem</span> {
+<span class="line-num">108</span>    <span class="prp">#deviceName</span>; <span class="prp">#os</span>; <span class="prp">#issue</span>; <span class="prp">#partsCost</span>; <span class="prp">#laborHours</span>…
+<span class="line-num">117</span>    <span class="kw">constructor</span>(data = {}) {
+<span class="line-num">118</span>        <span class="kw">super</span>(data.id, data.status, data.priority, data.paymentStatus);
+<span class="line-num">131</span>    <span class="kw">get</span> type() { <span class="kw">return</span> <span class="str">"Computer"</span>; }
+<span class="line-num">134</span>    calculateCost() { <span class="cmt">/* ฿40/ชม. — ดูสไลด์ถัดไป */</span> }
+<span class="line-num">140</span>    getDeviceSpecs() { <span class="cmt">/* คืนรายละเอียดคอมพิวเตอร์ */</span> }
+<span class="cmt">// บรรทัด 278 — ลำดับชั้นบุคคล</span>
+<span class="line-num">278</span><span class="kw">class</span> <span class="cls">Customer</span> <span class="kw">extends</span> <span class="cls">Person</span> {
+<span class="line-num">279</span>    <span class="prp">#loyaltyTier</span>;  <span class="cmt">// เพิ่มของตัวเอง: ระดับสมาชิก</span></pre>
             </div>
         </div>
     </section>
@@ -473,32 +477,32 @@
                 <div>
                     <p class="subtitle" style="margin-bottom:16px;"><strong class="highlight">แนวคิด:</strong> ชื่อเมธอดเดียวกัน <code style="color:var(--warning)">calculateCost()</code> ให้ผลต่างกันตามประเภทจริงของวัตถุ ส่วน UI เรียกเมธอดนี้เหมือนกันกับทุกงานซ่อม — แล้วอุปกรณ์แต่ละชนิดคำนวณราคาของตัวเอง <code style="color:var(--warning)">RepairFactory</code> เลือกคลาสย่อยที่ถูกต้องตอนรันไทม์</p>
                     <ul class="pill-list">
-                        <li><span class="tag">ComputerRepair</span><span>ราคา = อะไหล่ + ชั่วโมง × <strong>$40</strong></span><span class="ln">บรรทัด 121–124</span></li>
-                        <li><span class="tag">SmartphoneRepair</span><span>ราคา = อะไหล่ + ชั่วโมง × <strong>$30</strong></span><span class="ln">บรรทัด 190–193</span></li>
-                        <li><span class="tag">Factory</span><span><code>RepairFactory.create()</code> คืนคลาสย่อยที่ถูกต้อง</span><span class="ln">บรรทัด 504–511</span></li>
-                        <li><span class="tag">UI</span><span>Renderer เรียก <code>r.calculateCost()</code> — ไม่มี <code>if/else</code> ตามประเภท</span><span class="ln">ตาราง/แดชบอร์ด</span></li>
+                        <li><span class="tag">ComputerRepair</span><span>ราคา = อะไหล่ + ชั่วโมง × <strong>฿40</strong></span><span class="ln">บรรทัด 134–137</span></li>
+                        <li><span class="tag">SmartphoneRepair</span><span>ราคา = อะไหล่ + ชั่วโมง × <strong>฿30</strong></span><span class="ln">บรรทัด 203–206</span></li>
+                        <li><span class="tag">Factory</span><span><code>RepairFactory.create()</code> คืนคลาสย่อยที่ถูกต้อง</span><span class="ln">บรรทัด 561–569</span></li>
+                        <li><span class="tag">UI</span><span>ตาราง/แดชบอร์ด/ลูกค้า เรียก <code>r.calculateCost()</code> — ไม่มี <code>if/else</code> ตามประเภท</span><span class="ln">บรรทัด 1053, 1088</span></li>
                     </ul>
                 </div>
-                <pre><span class="code-label">app.js · การแทนที่แบบพหุสัณฐาน</span><span class="cmt">// บรรทัด 121–124 — ComputerRepair</span>
-<span class="line-num">121</span> calculateCost() {
-<span class="line-num">122</span>     <span class="kw">const</span> laborCost = <span class="prp">this</span>.<span class="prp">#laborHours</span> * <span class="num">40</span>;  <span class="cmt">// $40/ชม.</span>
-<span class="line-num">123</span>     <span class="kw">return</span> +(laborCost + <span class="prp">this</span>.<span class="prp">#partsCost</span>).toFixed(<span class="num">2</span>);
-<span class="line-num">124</span> }
-<span class="cmt">// บรรทัด 190–193 — SmartphoneRepair</span>
-<span class="line-num">190</span> calculateCost() {
-<span class="line-num">191</span>     <span class="kw">const</span> laborCost = <span class="prp">this</span>.<span class="prp">#laborHours</span> * <span class="num">30</span>;  <span class="cmt">// $30/ชม.</span>
-<span class="line-num">192</span>     <span class="kw">return</span> +(laborCost + <span class="prp">this</span>.<span class="prp">#partsCost</span>).toFixed(<span class="num">2</span>);
-<span class="line-num">193</span> }
-<span class="cmt">// บรรทัด 504–511 — เลือกคลาสตอนรันไทม์</span>
-<span class="line-num">504</span> <span class="kw">const</span> <span class="cls">RepairFactory</span> = {
-<span class="line-num">505</span>     create(data) {
-<span class="line-num">506</span>         <span class="kw">switch</span> (data.deviceType || data.device_type) {
-<span class="line-num">507</span>             <span class="kw">case</span> <span class="str">"Computer"</span>:   <span class="kw">return new</span> <span class="cls">ComputerRepair</span>(data);
-<span class="line-num">508</span>             <span class="kw">case</span> <span class="str">"Smartphone"</span>: <span class="kw">return new</span> <span class="cls">SmartphoneRepair</span>(data);
-<span class="line-num">509</span>             <span class="kw">default</span>:           <span class="kw">return new</span> <span class="cls">ComputerRepair</span>(data); <span class="cmt">// fallback</span>
-<span class="line-num">510</span>         }
-<span class="line-num">511</span>     }
-<span class="line-num">512</span> };</pre>
+                <pre><span class="code-label">app.js · การแทนที่แบบพหุสัณฐาน</span><span class="cmt">// บรรทัด 134–137 — ComputerRepair</span>
+<span class="line-num">134</span>calculateCost() {
+<span class="line-num">135</span>    <span class="kw">const</span> laborCost = <span class="prp">this</span>.<span class="prp">#laborHours</span> * <span class="num">40</span>;  <span class="cmt">// ฿40/ชม.</span>
+<span class="line-num">136</span>    <span class="kw">return</span> +(<span class="prp">this</span>.<span class="prp">#partsCost</span> + laborCost).toFixed(<span class="num">2</span>);
+<span class="line-num">137</span>}
+<span class="cmt">// บรรทัด 203–206 — SmartphoneRepair</span>
+<span class="line-num">203</span>calculateCost() {
+<span class="line-num">204</span>    <span class="kw">const</span> laborCost = <span class="prp">this</span>.<span class="prp">#laborHours</span> * <span class="num">30</span>;  <span class="cmt">// ฿30/ชม.</span>
+<span class="line-num">205</span>    <span class="kw">return</span> +(<span class="prp">this</span>.<span class="prp">#partsCost</span> + laborCost).toFixed(<span class="num">2</span>);
+<span class="line-num">206</span>}
+<span class="cmt">// บรรทัด 561–569 — เลือกคลาสตอนรันไทม์</span>
+<span class="line-num">561</span><span class="kw">const</span> <span class="cls">RepairFactory</span> = {
+<span class="line-num">562</span>    create(data) {
+<span class="line-num">563</span>        <span class="kw">switch</span> (data.deviceType || data.device_type) {
+<span class="line-num">564</span>            <span class="kw">case</span> <span class="str">"Computer"</span>:   <span class="kw">return new</span> <span class="cls">ComputerRepair</span>(data);
+<span class="line-num">565</span>            <span class="kw">case</span> <span class="str">"Smartphone"</span>: <span class="kw">return new</span> <span class="cls">SmartphoneRepair</span>(data);
+<span class="line-num">566</span>            <span class="kw">default</span>:           <span class="kw">return new</span> <span class="cls">ComputerRepair</span>(data); <span class="cmt">// fallback</span>
+<span class="line-num">567</span>        }
+<span class="line-num">568</span>    }
+<span class="line-num">569</span>};</pre>
             </div>
         </div>
     </section>
@@ -508,27 +512,28 @@
         <div class="slide-content">
             <div class="kicker">การสาธิต · ตัวอย่างจริง</div>
             <h2>Polymorphism ในทางปฏิบัติ — งานซ่อม 2 รายการ 1 คำสั่ง</h2>
-            <p class="subtitle" style="margin-bottom:24px;">วัตถุทั้งสองสร้างจาก factory เดียวกัน และแสดงผลด้วยฟังก์ชัน UI เดียวกัน เฉพาะ <em>คลาส</em> ที่ต่างกัน — ดังนั้นผลลัพธ์จึงต่างกัน</p>
+            <p class="subtitle" style="margin-bottom:24px;">วัตถุทั้งสองสร้างจาก factory เดียวกัน และแสดงผลด้วยฟังก์ชัน UI เดียวกัน เฉพาะ <em>คลาส</em> ที่ต่างกัน — ดังนั้นผลลัพธ์จึงต่างกัน (ตัวเลขจากข้อมูลตัวอย่างจริงในแอป)</p>
             <div class="grid-2">
-                <pre><span class="code-label">ตัวอย่างการรันจริง</span><span class="kw">const</span> repair1 = <span class="cls">RepairFactory</span>.create({
-    deviceType: <span class="str">"Computer"</span>, partsCost: <span class="num">45</span>, laborHours: <span class="num">3</span>
+                <pre><span class="code-label">ตัวอย่างจากข้อมูลจริงในแอป</span><span class="cmt">// seedDemoData — บรรทัด 1190+</span>
+<span class="kw">const</span> repair1 = <span class="cls">RepairFactory</span>.create({
+    deviceType: <span class="str">"Computer"</span>, partsCost: <span class="num">45</span>, laborHours: <span class="num">3</span>  <span class="cmt">// Dell XPS 15</span>
 });
 <span class="kw">const</span> repair2 = <span class="cls">RepairFactory</span>.create({
-    deviceType: <span class="str">"Smartphone"</span>, partsCost: <span class="num">35</span>, laborHours: <span class="num">1</span>
+    deviceType: <span class="str">"Smartphone"</span>, partsCost: <span class="num">35</span>, laborHours: <span class="num">1</span> <span class="cmt">// Galaxy S24</span>
 });
 
 <span class="cmt">// ชื่อเมธอดเดียวกัน — สูตรต่างกัน:</span>
-repair1.calculateCost()  <span class="cmt">// → 45 + 3×$40 = $165.00 💻</span>
-repair2.calculateCost()  <span class="cmt">// → 35 + 1×$30 =  $65.00 📱</span></pre>
+repair1.calculateCost()  <span class="cmt">// → 45 + 3×฿40 = ฿165.00 💻</span>
+repair2.calculateCost()  <span class="cmt">// → 35 + 1×฿30 =  ฿65.00 📱</span></pre>
                 <div>
                     <table class="compare">
                         <tr><th>เมธอด</th><th>ComputerRepair</th><th>SmartphoneRepair</th></tr>
                         <tr><td><code>type</code></td><td>"Computer"</td><td>"Smartphone"</td></tr>
-                        <tr><td><code>calculateCost()</code></td><td>อะไหล่ + ชม. × $40</td><td>อะไหล่ + ชม. × $30</td></tr>
+                        <tr><td><code>calculateCost()</code></td><td>อะไหล่ + ชม. × ฿40</td><td>อะไหล่ + ชม. × ฿30</td></tr>
                         <tr><td><code>getDeviceSpecs()</code></td><td>{ os, … }</td><td>{ phoneOS, … }</td></tr>
                         <tr><td><code>displayInfo</code></td><td>💻 Dell XPS 15</td><td>📱 iPhone 15 Pro</td></tr>
                     </table>
-                    <p style="font-size:.8rem; color:var(--muted); margin-top:16px; line-height:1.8;">แดชบอร์ด ตาราง และบิล เรียกเมธอดเหล่านี้แบบทั่วไป — <strong>การเพิ่มอุปกรณ์ชนิดใหม่ไม่ต้องแก้ UI เลย</strong> แค่เพิ่มคลาสย่อยอีก 1 คลาส นี่คือคุณค่าที่แท้จริงของ polymorphism<br><span style="font-size:.72rem;">ดูโค้ดจริงได้ที่ <code style="color:var(--accent)">app.js</code> บรรทัด 504–511 (RepairFactory)</span></p>
+                    <p style="font-size:.8rem; color:var(--muted); margin-top:16px; line-height:1.8;">แดชบอร์ด ตาราง และบิล เรียกเมธอดเหล่านี้แบบทั่วไป — <strong>การเพิ่มอุปกรณ์ชนิดใหม่ไม่ต้องแก้ UI เลย</strong> แค่เพิ่มคลาสย่อยอีก 1 คลาส นี่คือคุณค่าที่แท้จริงของ polymorphism<br><span style="font-size:.72rem;">ดูโค้ดจริงได้ที่ <code style="color:var(--accent)">app.js</code> บรรทัด 561–569 (RepairFactory) และ 1190+ (ข้อมูลตัวอย่าง)</span></p>
                 </div>
             </div>
         </div>
@@ -541,36 +546,35 @@ repair2.calculateCost()  <span class="cmt">// → 35 + 1×$30 =  $65.00 📱</sp
             <h2>DataStore — การจัดเก็บข้อมูลแบบห่อหุ้ม</h2>
             <div class="two-col">
                 <div>
-                    <p class="subtitle" style="margin-bottom:16px;">สถานะทั้งหมด — งานซ่อม, ลูกค้า, ช่างเทคนิค, ใบแจ้งหนี้ — อยู่ในวัตถุ <code style="color:var(--warning)">DataStore</code> ตัวเดียว (บรรทัด 361) ส่วน UI ไม่เคยแตะ <code style="color:var(--warning)">localStorage</code> โดยตรง เรียกผ่านเมธอด CRUD สาธารณะเท่านั้น ข้อมูลถูกโหลดกลับผ่าน <code style="color:var(--warning)">RepairFactory</code> แบบพหุสัณฐาน ทำให้บันทึกที่เก็บไว้กลับมาเป็นคลาสย่อยที่ถูกต้อง</p>
+                    <p class="subtitle" style="margin-bottom:16px;">สถานะทั้งหมด — งานซ่อม, ลูกค้า, ช่างซ่อม, ใบแจ้งหนี้ — อยู่ในวัตถุ <code style="color:var(--warning)">DataStore</code> ตัวเดียว (บรรทัด 374) ส่วน UI ไม่เคยแตะ <code style="color:var(--warning)">localStorage</code> โดยตรง เรียกผ่านเมธอด CRUD สาธารณะเท่านั้น ข้อมูลถูกโหลดกลับผ่าน <code style="color:var(--warning)">RepairFactory</code> แบบพหุสัณฐาน ทำให้บันทึกที่เก็บไว้กลับมาเป็นคลาสย่อยที่ถูกต้อง</p>
                     <ul class="pill-list">
-                        <li><span class="tag">สถานะส่วนตัว</span><span><code>#repairs</code>, <code>#customers</code>, <code>#technicians</code>, <code>#invoices</code></span><span class="ln">บรรทัด 362–366</span></li>
-                        <li><span class="tag">API สาธารณะ</span><span><code>addRepair</code>, <code>updateRepair</code>, <code>deleteRepair</code>, <code>getStats</code>…</span><span class="ln">บรรทัด 406+</span></li>
-                        <li><span class="tag">Observer</span><span><code>subscribe()</code> รีเฟรช UI อัตโนมัติทุกครั้งที่ข้อมูลเปลี่ยน</span><span class="ln">บรรทัด 400</span></li>
-                        <li><span class="tag">การกู้คืน</span><span><code>#load()</code> สร้างวัตถุใหม่ผ่าน factory → คงชนิดคลาสไว้</span><span class="ln">บรรทัด 371–380</span></li>
+                        <li><span class="tag">สถานะส่วนตัว</span><span><code>#repairs</code>, <code>#customers</code>, <code>#technicians</code>, <code>#invoices</code></span><span class="ln">บรรทัด 375–379</span></li>
+                        <li><span class="tag">API สาธารณะ</span><span><code>addRepair</code>, <code>updateRepair</code>, <code>deleteRepair</code>, <code>getStats</code>…</span><span class="ln">บรรทัด 419+</span></li>
+                        <li><span class="tag">Observer</span><span><code>subscribe()</code> รีเฟรช UI อัตโนมัติทุกครั้งที่ข้อมูลเปลี่ยน</span><span class="ln">บรรทัด 413</span></li>
+                        <li><span class="tag">การกู้คืน</span><span><code>#load()</code> สร้างวัตถุใหม่ผ่าน factory → คงชนิดคลาสไว้</span><span class="ln">บรรทัด 384–396</span></li>
+                        <li><span class="tag">ใบแจ้งหนี้ v2</span><span><code>setPaymentStatus()</code> + <code>#reconcileInvoices()</code> ซิงก์บิลกับงานซ่อมอัตโนมัติ</span><span class="ln">บรรทัด 447, 515</span></li>
                     </ul>
                 </div>
-                <pre><span class="code-label">app.js</span><span class="cmt">// บรรทัด 361–411 — ที่เก็บข้อมูลแบบห่อหุ้ม</span>
-<span class="line-num">361</span> <span class="kw">class</span> <span class="cls">DataStore</span> {
-<span class="line-num">362</span>     <span class="prp">#repairs</span> = [];
-<span class="line-num">363</span>     <span class="prp">#customers</span> = [];
-<span class="line-num">364</span>     <span class="prp">#technicians</span> = [];
-<span class="line-num">365</span>     <span class="prp">#invoices</span> = [];
-<span class="line-num">366</span>     <span class="prp">#listeners</span> = [];
-<span class="line-num">368</span>     <span class="kw">constructor</span>() { <span class="prp">this</span>.<span class="prp">#load</span>(); }
-<span class="line-num">371</span>     <span class="prp">#load</span>() {
-<span class="line-num">373</span>         <span class="kw">const</span> raw = localStorage.getItem(<span class="str">"repairShopData"</span>);
-<span class="line-num">380</span>         <span class="cmt">// …สร้างใหม่ผ่าน RepairFactory.create(r) → คงชนิดคลาส</span>
-<span class="line-num">388</span>     <span class="prp">#save</span>() {
-<span class="line-num">395</span>         localStorage.setItem(<span class="str">"repairShopData"</span>, JSON.stringify(d));
-<span class="line-num">396</span>         <span class="prp">this</span>.<span class="prp">#notify</span>();
-<span class="line-num">400</span>     subscribe(fn) { <span class="prp">this</span>.<span class="prp">#listeners</span>.push(fn); }
-<span class="line-num">406</span>     addRepair(data) {
-<span class="line-num">407</span>         <span class="kw">const</span> repair = <span class="cls">RepairFactory</span>.create(data);
-<span class="line-num">408</span>         <span class="prp">this</span>.<span class="prp">#repairs</span>.push(repair);
-<span class="line-num">409</span>         <span class="prp">this</span>.<span class="prp">#save</span>();
-<span class="line-num">410</span>         <span class="kw">return</span> repair;
-<span class="line-num">411</span>     }
-<span class="line-num">412</span> }</pre>
+                <pre><span class="code-label">app.js</span><span class="cmt">// บรรทัด 374–424 — ที่เก็บข้อมูลแบบห่อหุ้ม</span>
+<span class="line-num">374</span><span class="kw">class</span> <span class="cls">DataStore</span> {
+<span class="line-num">375</span>    <span class="prp">#repairs</span> = [];
+<span class="line-num">376</span>    <span class="prp">#customers</span> = [];
+<span class="line-num">377</span>    <span class="prp">#technicians</span> = [];
+<span class="line-num">378</span>    <span class="prp">#invoices</span> = [];
+<span class="line-num">379</span>    <span class="prp">#listeners</span> = [];
+<span class="line-num">384</span>    <span class="prp">#load</span>() {
+<span class="line-num">386</span>        <span class="kw">const</span> raw = localStorage.getItem(<span class="str">"repairShopData"</span>);
+<span class="line-num">393</span>        <span class="kw">this</span>.<span class="prp">#repairs</span> = (d.repairs || []).map(r =&gt; <span class="cls">RepairFactory</span>.create(r));
+<span class="line-num">401</span>    <span class="prp">#save</span>() {
+<span class="line-num">408</span>        localStorage.setItem(<span class="str">"repairShopData"</span>, JSON.stringify(d));
+<span class="line-num">409</span>        <span class="kw">this</span>.<span class="prp">#notify</span>();
+<span class="line-num">413</span>    subscribe(fn) { <span class="kw">this</span>.<span class="prp">#listeners</span>.push(fn); }
+<span class="line-num">419</span>    addRepair(data) {
+<span class="line-num">420</span>        <span class="kw">const</span> repair = <span class="cls">RepairFactory</span>.create(data);
+<span class="line-num">421</span>        <span class="kw">this</span>.<span class="prp">#repairs</span>.push(repair);
+<span class="line-num">422</span>        <span class="kw">this</span>.<span class="prp">#reconcileInvoices</span>();
+<span class="line-num">423</span>        <span class="kw">this</span>.<span class="prp">#save</span>();
+<span class="line-num">424</span>        <span class="kw">return</span> repair;</pre>
             </div>
         </div>
     </section>
@@ -583,12 +587,12 @@ repair2.calculateCost()  <span class="cmt">// → 35 + 1×$30 =  $65.00 📱</sp
             <table class="compare" style="margin-bottom:26px;">
                 <tr><th>หลักการ</th><th>ปรากฏที่ไหน</th><th>บรรทัด</th><th>ให้อะไรกับระบบ</th></tr>
                 <tr><td><span class="badge badge-abstraction" style="margin:0">Abstraction</span></td><td><code>BaseEntity</code> · <code>RepairItem</code> คลาสนามธรรม</td><td>13, 37</td><td>ข้อตกลงร่วม; UI อ้างอิงอินเทอร์เฟซ ไม่ใช่คลาสรูปธรรม</td></tr>
-                <tr><td><span class="badge badge-encapsulation" style="margin:0">Encapsulation</span></td><td>ฟิลด์ <code>#private</code>, setter ที่ตรวจสอบ, <code>DataStore</code></td><td>14, 38, 63, 361</td><td>ความปลอดภัยของข้อมูล; ปฏิเสธสถานะผิด; ซ่อนการจัดเก็บ</td></tr>
-                <tr><td><span class="badge badge-inheritance" style="margin:0">Inheritance</span></td><td><code>ComputerRepair</code>/<code>SmartphoneRepair</code> ← <code>RepairItem</code>; <code>Customer</code>/<code>Technician</code> ← <code>Person</code></td><td>94, 163, 265, 281</td><td>ใช้โค้ดซ้ำ — ตรรกะร่วมเขียนครั้งเดียว</td></tr>
-                <tr><td><span class="badge badge-polymorphism" style="margin:0">Polymorphism</span></td><td>การแทนที่ <code>calculateCost()</code> / <code>getDeviceSpecs()</code>, <code>RepairFactory</code></td><td>121, 190, 504</td><td>คำสั่งเดียวกัน ผลลัพธ์ตามชนิด; ขยายง่ายด้วยการเพิ่มคลาสย่อย 1 คลาส</td></tr>
+                <tr><td><span class="badge badge-encapsulation" style="margin:0">Encapsulation</span></td><td>ฟิลด์ <code>#private</code>, setter ที่ตรวจสอบ, <code>DataStore</code></td><td>14, 38–41, 68, 374</td><td>ความปลอดภัยของข้อมูล; ปฏิเสธสถานะผิด; ซ่อนการจัดเก็บ</td></tr>
+                <tr><td><span class="badge badge-inheritance" style="margin:0">Inheritance</span></td><td><code>ComputerRepair</code>/<code>SmartphoneRepair</code> ← <code>RepairItem</code>; <code>Customer</code>/<code>Technician</code> ← <code>Person</code></td><td>107, 176, 278, 294</td><td>ใช้โค้ดซ้ำ — ตรรกะร่วมเขียนครั้งเดียว</td></tr>
+                <tr><td><span class="badge badge-polymorphism" style="margin:0">Polymorphism</span></td><td>การแทนที่ <code>calculateCost()</code> / <code>getDeviceSpecs()</code>, <code>RepairFactory</code></td><td>134, 203, 561</td><td>คำสั่งเดียวกัน ผลลัพธ์ตามชนิด; ขยายง่ายด้วยการเพิ่มคลาสย่อย 1 คลาส</td></tr>
             </table>
             <div style="background:rgba(74,222,128,.08); border:1px solid rgba(74,222,128,.3); border-radius:12px; padding:18px 22px; font-size:.95rem; line-height:1.8;">
-                <strong style="color:var(--success);">✅ ผลงานครบถ้วน:</strong> แก้ปัญหาจริงด้วย OOP · ใช้หลักการครบทั้ง 4 และตรวจสอบได้ด้วยหมายเลขบรรทัด · GUI ใช้งานได้จริง (แดชบอร์ด, CRUD, ค้นหา, บิล) · ข้อมูลบันทึกข้ามเซสชัน · <strong>เปิด <code style="color:var(--warning)">index.html</code> เพื่อสาธิตสด (โค้ดหลักอยู่ใน <code style="color:var(--warning)">app.js</code>)</strong>
+                <strong style="color:var(--success);">✅ ผลงานครบถ้วน:</strong> แก้ปัญหาจริงด้วย OOP · ใช้หลักการครบทั้ง 4 และตรวจสอบได้ด้วยหมายเลขบรรทัด · GUI ใช้งานได้จริง 5 หน้า (แดชบอร์ด, งานซ่อม, ลูกค้า, ช่างซ่อม, การเงิน) · ใบแจ้งหนี้อัตโนมัติ + สถานะการชำระเงินซิงก์ทันที · ข้อมูลบันทึกข้ามเซสชัน · <strong>เปิด <code style="color:var(--warning)">DATA.html</code> เพื่อสาธิตสด (โค้ดหลักอยู่ใน <code style="color:var(--warning)">app.js</code>)</strong>
             </div>
         </div>
     </section>
@@ -599,12 +603,17 @@ repair2.calculateCost()  <span class="cmt">// → 35 + 1×$30 =  $65.00 📱</sp
             <div class="kicker">คำถาม-คำตอบ</div>
             <h1 style="font-size:3rem;">ขอบคุณครับ! 🙌</h1>
             <div class="divider"></div>
-            <p class="subtitle">สาธิตสด: เปิด <code style="color:var(--warning)">index.html</code><br>โค้ดหลัก: <code style="color:var(--warning)">app.js</code> · สไลด์: <code style="color:var(--warning)">presentation.html</code></p>
+            <p class="subtitle">สาธิตสด: เปิด <code style="color:var(--warning)">DATA.html</code><br>โค้ดหลัก: <code style="color:var(--warning)">app.js</code> · สไลด์: <code style="color:var(--warning)">index.html</code></p>
             <div class="title-meta" style="margin-top:34px;">
                 <span>🔧 RepairShop Pro</span>
                 <span>📚 OOP: Abstraction · Encapsulation · Inheritance · Polymorphism</span>
                 <span>🎓 ยินดีตอบคำถาม</span>
             </div>
+            <p style="margin-top:22px; font-size:.9rem; color:var(--muted); line-height:1.9;">
+                <strong style="color:var(--text);">ผู้จัดทำ</strong><br>
+                1. 68026484 นางสาวปานชนก พรหมศรีสวัสดิ์<br>
+                2. 68026552 นายอมรทิพย์ เรืองคำ
+            </p>
         </div>
     </section>
 </div>
